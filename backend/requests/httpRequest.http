@@ -1,0 +1,10 @@
+POST http://localhost:8080/student/login
+Content-Type: application/json
+
+{
+  "ticket-number": "123456",
+  "name": "李博文",
+  "id-number": "421122199702250017"
+}
+
+###

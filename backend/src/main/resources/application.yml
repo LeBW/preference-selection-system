@@ -1,0 +1,4 @@
+jwt:
+  token:
+    validity: 18000000
+    secret: FudanUniversityComputerScienceAndTechnology
