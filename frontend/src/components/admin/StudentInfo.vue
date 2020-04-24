@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-main>
-            <el-form-item prop="file" label="考生信息文件导入（仅支持excel表）">
+            <el-form-item prop="file" label="考生信息添加（仅支持excel表）">
                 <input type="file" accept="application/vnd.ms-excel" @change="updateStudentInfo($event)"/>
             </el-form-item>
             <h3>考生信息</h3>
@@ -80,7 +80,22 @@
                 }
             },
             updateStudentInfo(e){
-
+                var formData = new FormData()
+                formData.append('temp-file', e.target.files[0])
+                let config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                this.$axios.post('/admin/students', formData, config)
+                    .then(resp => {
+                        this.$message.success(resp.data.message)
+                        this.getStudentInfo()
+                    })
+                    .catch(error => {
+                        console.log()
+                        this.$message.error('考生信息添加失败')
+                    })
             }
         }
     }

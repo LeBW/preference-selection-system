@@ -17,6 +17,7 @@
                 <el-menu-item index="/MajorInfo"><i class="el-icon-user icon"></i><span>专业目录</span></el-menu-item>
                 <el-menu-item index="/StudentInfo"><i class="el-icon-files icon"></i><span>考生信息</span></el-menu-item>
                 <el-menu-item index="/StudentChoice"><i class="el-icon-document icon"></i><span>考生志愿</span></el-menu-item>
+                <el-menu-item index="/FileInfo"><i class="el-icon-document icon"></i><span>文件信息</span></el-menu-item>
                 <el-menu-item index="/Setting"><i class="el-icon-message icon"></i><span>系统设置</span></el-menu-item>
             </el-menu>
         </div>

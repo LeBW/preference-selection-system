@@ -2,10 +2,7 @@
     <div>
         <el-form>
             <h3>学硕专硕志愿统计信息</h3>
-
-            <el-form-item prop="file" label="考生志愿信息导出（仅支持excel表）">
-                <input type="file" accept="application/vnd.ms-excel" @change="exportChoiceInfo($event)"/>
-            </el-form-item>
+            <el-button type="primary" icon="el-icon-download" @click="exportChoiceInfo($event)">考生志愿信息导出</el-button>
             <el-table :data="choicesData">
                 <el-table-column prop="ticket-number" label="准考证号" width="140"></el-table-column>
                 <el-table-column prop="name" label="考生姓名" width="140"></el-table-column>
@@ -54,7 +51,7 @@
                     this.choicesDataEnd.push(this.choicesData[index])
                 }
             } else{
-                tihs.choicesDataEnd = this.choicesData
+                this.choicesDataEnd = this.choicesData
             }
         },
         methods: {
@@ -88,14 +85,37 @@
                 }
             },
             exportChoiceInfo(e) {
-                this.$axios.get('/admin/export-choices')
+                let config = {
+                    responseType: 'blob'
+                }
+                this.$axios.get('/admin/export-choices', config)
                     .then(resp => {
                         // 获取的是文件流
-
+                        console.log(resp)
+                        this.downloadExcel(resp.data["temp-file"])
                     })
                     .catch(error => {
                         console.log(error)
                     })
+            },
+            downloadExcel(data){
+                const blob = new Blob([data])
+                const fileName = "考生志愿信息"
+                if ('download' in document.createElement('a')){
+                    // 非IE下载
+                    const elink = document.createElement('a')
+                    elink.download = fileName
+                    elink.style.display = 'none'
+                    elink.href = URL.createObjectURL(blob)
+                    document.body.appendChild(elink)
+                    elink.click()
+                    URL.revokeObjectURL(elink.href) // 释放URL对象
+                    document.body.removeChild(elink)
+                }
+                else {
+                    // IE10+下载
+                    navigator.msSaveBlob(blob, fileName)
+                }
             }
         }
     }
