@@ -55,9 +55,9 @@ export default {
   methods: {
     login () {
       this.$axios.post('/student/login', {
-        ticketNumber: this.loginForm.ticketNumber,
+        'ticket-number': this.loginForm.ticketNumber,
         name: this.loginForm.name,
-        idNumber: this.loginForm.idNumber
+        'id-number': this.loginForm.idNumber
       })
         .then(resp => {
           if (resp.status === 200) {

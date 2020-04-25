@@ -1,6 +1,7 @@
 package fudan.se.preferenceselectionsystem.controller;
 
 import fudan.se.preferenceselectionsystem.controller.request.StudentLoginRequest;
+import fudan.se.preferenceselectionsystem.domain.Major;
 import fudan.se.preferenceselectionsystem.domain.Student;
 import fudan.se.preferenceselectionsystem.security.jwt.JwtTokenUtil;
 import fudan.se.preferenceselectionsystem.service.CustomUserDetailsService;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author LBW
@@ -48,12 +50,19 @@ public class StudentController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("choice")
+    @PostMapping("/choice")
     public ResponseEntity<?> modifyChoice(@RequestBody Student request, Authentication authentication) {
         logger.info("Student modify choice: " + authentication.getName());
         studentService.modifyChoice(authentication.getName(), request);
         HashMap<String, String> responseMap = new HashMap<>();
         responseMap.put("message", "success");
         return ResponseEntity.ok(responseMap);
+    }
+
+    @GetMapping("/major")
+    public ResponseEntity<?> getMajorInfo(Authentication authentication) {
+        logger.info("Student get majors: ", authentication.getName());
+        List<Major> majorInfo = studentService.getMajorInfo(authentication.getName());
+        return ResponseEntity.ok(majorInfo);
     }
 }

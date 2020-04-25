@@ -11,7 +11,6 @@
             <p>考生姓名：{{student['name']}}</p>
             <p>报考学位类型：{{student['degree-type']}}</p>
             <p>报考专业：{{student['major']}}</p>
-            <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
           </div>
         </el-col>
 
@@ -50,7 +49,7 @@
           <div>
             <h3>请选择第一志愿</h3>
             <p v-if="student['degree-type'] === '学术学位'">{{student['major']}}</p>
-            <el-select v-else v-model="secondChoice" placeholder="第一志愿" @change="changeFirstChoice">
+            <el-select v-else v-model="firstChoice" placeholder="第一志愿" @change="changeFirstChoice">
               <el-option v-for="item in profMajor"
                          :key="item.display"
                          :label="item.display"
@@ -60,14 +59,14 @@
             <br/>
 
             <h3>请选择第二志愿</h3>
-            <el-select v-if="student['degree-type'] === '学术学位'" v-model="firstChoice" placeholder="第二志愿" @change="changeFirstChoice">
+            <el-select v-if="student['degree-type'] === '学术学位'" v-model="firstChoice" placeholder="第二志愿" @change="changeSecChoice">
               <el-option v-for="item in researchMajor"
                          :key="item.display"
                          :label="item.display"
                          :value="item.display"
               ></el-option>
             </el-select>
-            <el-select e-else v-model="secondChoice" placeholder="第二志愿" @change="changeSecChoice">
+            <el-select v-else v-model="secondChoice" placeholder="第二志愿" @change="changeSecChoice">
               <el-option v-for="item in profMajor"
                          :key="item.display"
                          :label="item.display"
@@ -83,6 +82,7 @@
             <el-button type="primary"
                        style="width: 30%; background: #afb4db; border: none"
                        v-on:click="submitInfo">提交</el-button>
+             <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
           </div>
         </el-col>
       </el-row>
@@ -109,10 +109,34 @@ export default {
     }
   },
   created () {
+    // this.$set(this.student, this.$store.state.curStudent)
     this.student = this.$store.state.curStudent
+
+    this.modifiedForm['first-choice-major'] = this.student['first-choice-major']
+    this.modifiedForm['second-choice-major'] = this.student['second-choice-major']
+
+    this.modifiedForm['first-choice-direction'] = this.student['first-choice-direction']
+    this.modifiedForm['second-choice-direction'] = this.student['second-choice-direction']
+
+    if(this.student['last-modify-time'] !== ''){
+      if (this.student['first-choice-direction'] !== ''){
+        this.firstChoice = this.student['first-choice-major'] + '－' + this.student['first-choice-direction']
+      }
+      else{
+         this.firstChoice = this.student['first-choice-major']
+      }
+      
+      if( this.student['second-choice-direction'] !== ''){
+        this.secondChoice = this.student['second-choice-major'] + '－' + this.student['second-choice-direction']
+      }
+      else{
+         this.secondChoice = this.student['second-choice-major']
+      }
+    }
+   
     this.getMajorsInfo()
-    this.getFilesInfo()
-    this.getChoicesOverview()
+    // this.getFilesInfo()
+    // this.getChoicesOverview()
   },
   methods: {
     getPersonInfo () {
@@ -176,7 +200,7 @@ export default {
     },
     getMajorsInfo () {
       // 获取已有的专业目录
-      this.$axios.get('/student/majors')
+      this.$axios.get('/student/major')
         .then(resp => {
           console.log(resp)
           // todo: 存疑
@@ -205,11 +229,12 @@ export default {
       this.modifiedForm['adjust-major'] = this.student['adjust-major']
       // 专硕默认无法调剂
       this.modifiedForm['adjust-degree-type'] = this.student['adjust-degree-type']
-      this.$axios.post('student/personal-info', this.modifiedForm)
+      this.$axios.post('/student/choice', this.modifiedForm)
         .then(resp => {
           this.$message.success('提交成功')
           // 刷新个人信息
           this.getPersonInfo()
+          this.student = this.$store.state.curStudent
         })
         .catch(error => {
           console.log(error)
@@ -218,26 +243,32 @@ export default {
     },
     changeFirstChoice (val) {
       // 只有专硕可以改变第一志愿
-      let firstMajor = val.split('-')[0].trim()
-      if (firstMajor === this.secondChoice.split('-')[0].trim()) {
+      let firstMajor = val.split('－')[0].trim()
+      if (firstMajor === this.secondChoice.split('－')[0].trim()) {
         this.$message.warning('第一志愿和第二志愿的学科方向应不同！请重新选择')
       } else {
         // 更新学生的信息
         this.modifiedForm['first-choice-major'] = firstMajor
-        this.modifiedForm['first-choice-direction'] = val.split('-')[1].trim()
+        this.modifiedForm['first-choice-direction'] = val.split('－')[1].trim()
       }
     },
     changeSecChoice (val) {
+      console.log(val)
       // 改变第二志愿
-      let secMajor = val.split('-')[0].trim()
+      let secMajor = val.split('－')[0].trim()
+      console.log(secMajor)
 
       if (this.student['degree-type'] === '专业学位') {
-        if (secMajor === this.firstChoice.split('-')[0].trim()) {
+        if (secMajor === this.firstChoice.split('－')[0].trim()) {
           this.$message.warning('第一志愿和第二志愿的学科方向应不同！请重新选择')
         } else {
           // 更新学生的信息
           this.modifiedForm['second-choice-major'] = secMajor
-          this.modifiedForm['second-choice-direction'] = val.split('-')[1].trim()
+
+          if (val.split('－').length === 1){
+            
+          }
+          this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
         }
       } else {
         // 学硕 不与报考专业相同
@@ -246,7 +277,7 @@ export default {
         } else {
           // 更新学生的信息
           this.modifiedForm['second-choice-major'] = secMajor
-          this.modifiedForm['second-choice-direction'] = val.split('-')[1].trim()
+          this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
         }
       }
     }

@@ -25,3 +25,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4M
   "adjust-major": true,
   "adjust-degree-type": true
 }
+
+###
+GET http://localhost:8080/student/major
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4MDI4NzksImV4cCI6MTU4NzgyMDg3OX0.hVg-12wAvqKtVZGKO9y7G-fPOO0MB70_38LpUMxlPHX-Rxyu127MBDGbRk75d3y0GYdJvcMIG8mX4ZflmalmTw

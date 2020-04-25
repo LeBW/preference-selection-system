@@ -27,7 +27,7 @@ public class Major {
 
     private String display;
 
-    private int spots;
+    private Integer spots;
 
     public Major() {
     }
@@ -72,11 +72,11 @@ public class Major {
         this.display = display;
     }
 
-    public int getSpots() {
+    public Integer getSpots() {
         return spots;
     }
 
-    public void setSpots(int spots) {
+    public void setSpots(Integer spots) {
         this.spots = spots;
     }
 

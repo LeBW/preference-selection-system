@@ -46,10 +46,10 @@ public class Student {
     private String secondChoiceDirection;
 
     @JsonProperty("adjust-major")
-    private boolean adjustMajor;
+    private Boolean adjustMajor;
 
     @JsonProperty("adjust-degree-type")
-    private boolean adjustDegreeType;
+    private Boolean adjustDegreeType;
 
     public Date getLastModifyTime() {
         return lastModifyTime;
@@ -160,7 +160,7 @@ public class Student {
         this.secondChoiceDirection = secondChoiceDirection;
     }
 
-    public boolean getAdjustMajor() {
+    public Boolean getAdjustMajor() {
         return adjustMajor;
     }
 
@@ -168,7 +168,7 @@ public class Student {
         this.adjustMajor = adjustMajor;
     }
 
-    public boolean getAdjustDegreeType() {
+    public Boolean getAdjustDegreeType() {
         return adjustDegreeType;
     }
 

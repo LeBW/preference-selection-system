@@ -11,7 +11,7 @@ export default new Vuex.Store({
     login (state, data) {
       // 记录token
       localStorage.setItem('token', data)
-      state.token = data.token
+      state.token = data
     },
     logout (state) {
       // 移除token
@@ -22,8 +22,8 @@ export default new Vuex.Store({
     },
     setCurStudent (state, data) {
       // 记录当前student信息
-      localStorage.setItem('curStudent', data)
-      state.curStudent = data.student
+      localStorage.setItem('curStudent', JSON.stringify(data))
+      state.curStudent = data
     }
   },
   actions: {

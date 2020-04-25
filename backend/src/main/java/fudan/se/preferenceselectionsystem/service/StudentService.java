@@ -1,6 +1,8 @@
 package fudan.se.preferenceselectionsystem.service;
 
+import fudan.se.preferenceselectionsystem.domain.Major;
 import fudan.se.preferenceselectionsystem.domain.Student;
+import fudan.se.preferenceselectionsystem.repository.MajorRepository;
 import fudan.se.preferenceselectionsystem.repository.StudentRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author LBW
@@ -19,11 +22,13 @@ public class StudentService {
     private StudentRepository studentRepository;
     private CustomUserDetailsService customUserDetailsService;
     private AuthenticationManager authenticationManager;
+    private MajorRepository majorRepository;
 
-    public StudentService(StudentRepository studentRepository, CustomUserDetailsService customUserDetailsService, AuthenticationManager authenticationManager) {
+    public StudentService(StudentRepository studentRepository, CustomUserDetailsService customUserDetailsService, AuthenticationManager authenticationManager, MajorRepository majorRepository) {
         this.studentRepository = studentRepository;
         this.customUserDetailsService = customUserDetailsService;
         this.authenticationManager = authenticationManager;
+        this.majorRepository = majorRepository;
 
     }
 
@@ -54,5 +59,12 @@ public class StudentService {
         student.setLastModifyTime(new Date());
         //save into database
         studentRepository.save(student);
+    }
+
+    public List<Major> getMajorInfo(String ticketNumber) {
+        Student student = studentRepository.findByTicketNumber(ticketNumber);
+        // get majors by degree type.
+        String degreeType = student.getDegreeType();
+        return majorRepository.findByDegreeType(degreeType);
     }
 }

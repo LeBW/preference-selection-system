@@ -10,7 +10,8 @@ export const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/preference'
+      redirect: '/preference',
+      component: PreferenceSelect
     },
     {
       path: '/preference',
