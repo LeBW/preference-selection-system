@@ -20,13 +20,16 @@ public class PreferenceSelectionSystemApplication {
             @Override
             public void run(String... args) throws Exception {
                 // create a student if not exists
-                Student student = new Student();
-                student.setTicketNumber("123456");
-                student.setName("李博文");
-                student.setIdNumber("421122199702250017");
-                student.setDepartment("软件学院");
-                student.setMajor("软件工程");
-                studentRepository.save(student);
+                if (studentRepository.findByTicketNumber("123456") == null) {
+                    Student student = new Student();
+                    student.setTicketNumber("123456");
+                    student.setName("李博文");
+                    student.setIdNumber("421122199702250017");
+                    student.setDepartment("软件学院");
+                    student.setMajor("软件工程");
+                    studentRepository.save(student);
+                }
+
             }
         };
     }

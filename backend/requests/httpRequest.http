@@ -10,12 +10,12 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/student/info
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc3ODAyMzIsImV4cCI6MTU4Nzc5ODIzMn0.LE8q1dQZL23ladHJww3LN6761_35z7jna-7NbWg7CcPq-42VOOeAUcDzmj3AbtM6oOBYxMX8j_WBzXWLycWIPQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4MDI4NzksImV4cCI6MTU4NzgyMDg3OX0.hVg-12wAvqKtVZGKO9y7G-fPOO0MB70_38LpUMxlPHX-Rxyu127MBDGbRk75d3y0GYdJvcMIG8mX4ZflmalmTw
 
 ###
 POST http://localhost:8080/student/choice
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc3ODAyMzIsImV4cCI6MTU4Nzc5ODIzMn0.LE8q1dQZL23ladHJww3LN6761_35z7jna-7NbWg7CcPq-42VOOeAUcDzmj3AbtM6oOBYxMX8j_WBzXWLycWIPQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4MDI4NzksImV4cCI6MTU4NzgyMDg3OX0.hVg-12wAvqKtVZGKO9y7G-fPOO0MB70_38LpUMxlPHX-Rxyu127MBDGbRk75d3y0GYdJvcMIG8mX4ZflmalmTw
 
 {
   "first-choice-major": "计算机系统结构",

@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author LBW
  */
@@ -49,6 +51,7 @@ public class StudentService {
         student.setSecondChoiceDirection(request.getSecondChoiceDirection());
         student.setAdjustDegreeType(request.getAdjustDegreeType());
         student.setAdjustMajor(request.getAdjustMajor());
+        student.setLastModifyTime(new Date());
         //save into database
         studentRepository.save(student);
     }

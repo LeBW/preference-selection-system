@@ -16,6 +16,8 @@ public class Major {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String department;
+
     @JsonProperty("degree-type")
     private String degreeType;
 
@@ -76,5 +78,13 @@ public class Major {
 
     public void setSpots(int spots) {
         this.spots = spots;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

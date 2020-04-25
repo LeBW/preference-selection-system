@@ -1,8 +1,10 @@
 package fudan.se.preferenceselectionsystem.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author LBW
@@ -48,6 +50,17 @@ public class Student {
 
     @JsonProperty("adjust-degree-type")
     private boolean adjustDegreeType;
+
+    public Date getLastModifyTime() {
+        return lastModifyTime;
+    }
+
+    public void setLastModifyTime(Date lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
+    }
+
+    @JsonProperty("last-modify-time")
+    private Date lastModifyTime;
 
     public Student() {}
 
