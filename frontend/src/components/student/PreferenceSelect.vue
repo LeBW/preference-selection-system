@@ -1,76 +1,93 @@
 <template>
     <div>
+      <el-row>
         <h2>2020年复旦大学计算机科学技术学院研究生复试志愿填报</h2>
-        <div class="base_info">
+      </el-row>
+
+      <el-row :gutter="20">
+        <el-col :span="10">
+          <div class="base_info">
             <p>准考证号：{{student['ticket-number']}}</p>
             <p>考生姓名：{{student['name']}}</p>
             <p>报考学位类型：{{student['degree-type']}}</p>
             <p>报考专业：{{student['major']}}</p>
-        </div>
+            <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
+          </div>
+        </el-col>
 
-        <p v-if="student['last-modify-time']">上次修改时间：{{student['last-modify-time']}}</p>
+        <el-col :span="10">
+          <div>
+            <span>名额与填报志愿人数</span>
+            <el-button size="mini" @click="getChoicesOverview">刷新</el-button>
+            <el-table :data="choiceInfo">
+              <el-table-column v-if="student['degree-type'] === '学术学位'" prop="major" label="专业"></el-table-column>
+              <el-table-column v-else prop="major" label="学科方向"></el-table-column>
+              <el-table-column prop="spots" label="统考招生名额"></el-table-column>
+              <el-table-column prop="first-choice-major-numbers" label="第一志愿人数"></el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
 
-        <br>
-        <h3>请选择第一志愿</h3>
-        <p v-if="student['degree-type'] === '学术学位'">{{student['major']}}</p>
-        <el-select v-else v-model="secondChoice" placeholder="第一志愿" @change="changeFirstChoice">
-            <el-option v-for="item in profMajor"
-                       :key="item.display"
-                       :label="item.display"
-                       :value="item.display"
-            ></el-option>
-        </el-select>
-        <br/>
-
-        <h3>请选择第二志愿</h3>
-        <el-select v-if="student['degree-type'] === '学术学位'" v-model="firstChoice" placeholder="第二志愿" @change="changeFirstChoice">
-            <el-option v-for="item in researchMajor"
-                       :key="item.display"
-                       :label="item.display"
-                       :value="item.display"
-            ></el-option>
-        </el-select>
-        <el-select e-else v-model="secondChoice" placeholder="第二志愿" @change="changeSecChoice">
-            <el-option v-for="item in profMajor"
-                       :key="item.display"
-                       :label="item.display"
-                       :value="item.display"
-            ></el-option>
-        </el-select>
-        <br/>
-
-        <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
-        <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
-
-        <br/>
-        <el-form-item style="width: 100%">
-            <el-button type="primary"
-                       style="width: 40%; background: #afb4db; border: none"
-                       v-on:click="submitInfo">提交</el-button>
-        </el-form-item>
-        <br/>
-
-        <h3>相关文件列表</h3>
-        <el-table :data="filesInfo">
-            <el-table-column prop="name" label="文件名" width="140"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="120">
+      <el-row :gutter="20">
+        <el-col :span="10">
+          <div style="padding-left: 10px">
+            <h3>相关文件列表</h3>
+            <el-table :data="filesInfo">
+              <el-table-column prop="name" label="文件名"></el-table-column>
+              <el-table-column fixed="right" label="操作">
                 <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            @click="getFileById(scope.$index, scope.row)">下载</el-button>
+                  <el-button
+                    size="mini"
+                    @click="getFileById(scope.$index, scope.row)">下载</el-button>
                 </template>
-            </el-table-column>
-        </el-table>
-        <br/>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
 
-        <h3>名额与填报志愿人数</h3>
-        <el-button size="mini" @click="getChoicesOverview">刷新</el-button>
-        <el-table :data="choiceInfo">
-            <el-table-column v-if="student['degree-type'] === '学术学位'" prop="major" label="专业"></el-table-column>
-            <el-table-column v-else prop="major" label="学科方向"></el-table-column>
-            <el-table-column prop="spots"></el-table-column>
-            <el-table-column prop="first-choice-major-numbers"></el-table-column>
-        </el-table>
+        <el-col :span="10">
+          <div>
+            <h3>请选择第一志愿</h3>
+            <p v-if="student['degree-type'] === '学术学位'">{{student['major']}}</p>
+            <el-select v-else v-model="secondChoice" placeholder="第一志愿" @change="changeFirstChoice">
+              <el-option v-for="item in profMajor"
+                         :key="item.display"
+                         :label="item.display"
+                         :value="item.display"
+              ></el-option>
+            </el-select>
+            <br/>
+
+            <h3>请选择第二志愿</h3>
+            <el-select v-if="student['degree-type'] === '学术学位'" v-model="firstChoice" placeholder="第二志愿" @change="changeFirstChoice">
+              <el-option v-for="item in researchMajor"
+                         :key="item.display"
+                         :label="item.display"
+                         :value="item.display"
+              ></el-option>
+            </el-select>
+            <el-select e-else v-model="secondChoice" placeholder="第二志愿" @change="changeSecChoice">
+              <el-option v-for="item in profMajor"
+                         :key="item.display"
+                         :label="item.display"
+                         :value="item.display"
+              ></el-option>
+            </el-select>
+            <br/>
+
+            <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
+            <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
+            <br/>
+
+            <el-button type="primary"
+                       style="width: 30%; background: #afb4db; border: none"
+                       v-on:click="submitInfo">提交</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <br/>
+      <br/>
     </div>
 </template>
 
@@ -161,8 +178,9 @@ export default {
       // 获取已有的专业目录
       this.$axios.get('/student/majors')
         .then(resp => {
+          console.log(resp)
           // todo: 存疑
-          this.majorInfo = resp.data.data
+          this.majorInfo = resp.data
 
           // 专硕和学硕信息分开
           for (let i = 0; i < this.majorInfo.length; i++) {

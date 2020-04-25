@@ -16,7 +16,9 @@ export default new Vuex.Store({
     logout (state) {
       // 移除token
       localStorage.removeItem('token')
+      localStorage.removeItem('curStudent')
       state.token = null
+      state.curStudent = null
     },
     setCurStudent (state, data) {
       // 记录当前student信息

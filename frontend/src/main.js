@@ -7,6 +7,9 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// mock.js
+process.env.Mock && require('./mock.js')
+
 // axios配置
 var axios = require('axios')
 // Axios挂载到prototype，全局可以使用this.$axios访问

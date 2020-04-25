@@ -62,7 +62,7 @@ export default {
         .then(resp => {
           if (resp.status === 200) {
             this.$store.commit('login', resp.data.token)
-            this.$store.commit('curStudent', resp.data.student)
+            this.$store.commit('setCurStudent', resp.data.student)
             // 跳转
             this.$router.replace({path: '/'})
           } else {
@@ -80,7 +80,8 @@ export default {
 
 <style scoped>
     #base_login{
-        /*background: url("../assets/background/checkerboard-cross.png") repeat;*/
+        background-image: url("~img/xueyuan-jxl.jpg");
+        background-size: cover;
         background-position: center;
         height: 100%;
         width: 100%;
