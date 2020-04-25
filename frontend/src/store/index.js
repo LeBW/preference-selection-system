@@ -9,7 +9,8 @@ export default new Vuex.Store({
   },
   mutations: {
     login (state, data) {
-      localStorage.setItem('token', data.token);
+      // 记录token
+      localStorage.setItem('token', data);
       state.token = data.token
     },
     logout (state) {
@@ -18,7 +19,8 @@ export default new Vuex.Store({
       state.token = null
     },
     setCurStudent(state, data){
-      localStorage.setItem('curStudent', data.student);
+      // 记录当前student信息
+      localStorage.setItem('curStudent', data);
       state.curStudent = data.student
     }
   },

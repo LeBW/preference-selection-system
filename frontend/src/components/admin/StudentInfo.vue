@@ -27,78 +27,78 @@
 </template>
 
 <script>
-    export default {
-        name: "StudentInfo",
-        created() {
-            this.getStudentInfo()
-            this.totalItems = this.studentData.length
-            if(this.totalItems > this.pageSize){
-                for(let index = 0; index < this.pageSize; index++){
-                    this.studentDataEnd.push(this.studentData[index])
-                }
-            } else{
-                tihs.studentDataEnd = this.studentData
-            }
-        },
-        data() {
-            return{
-                studentData: [],
-                studentDataEnd: [],
-                currentPage: 1,
-                pageSize: 2,
-                totalItems: 0
-            }
-        },
-        methods: {
-            getStudentInfo() {
-                this.$axios.get('/admin/students')
-                    .then(resp => {
-                        this.studentData = resp.data.date
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            handleSizeChange(val) {
-                console.log('每页${val}条')
-                this.pageSize = val
-                this.handleCurrentChange(this.currentPage)
-            },
-            handleCurrentChange(val) {
-                console.log('当前页：${val}')
-                this.currentPage = val
-                this.currentChangePage(this.studentData)
-            },
-            currentChangePage(list){
-                let from = (this.currentPage - 1) * this.pageSize
-                let to = this.currentPage * this.pageSize
-                this.studentDataEnd = [];
-                for(; from < to; from++){
-                    if(list[from]){
-                        this.studentDataEnd.push(list[from])
-                    }
-                }
-            },
-            updateStudentInfo(e){
-                var formData = new FormData()
-                formData.append('temp-file', e.target.files[0])
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-                this.$axios.post('/admin/students', formData, config)
-                    .then(resp => {
-                        this.$message.success(resp.data.message)
-                        this.getStudentInfo()
-                    })
-                    .catch(error => {
-                        console.log()
-                        this.$message.error('考生信息添加失败')
-                    })
-            }
-        }
+export default {
+  name: 'StudentInfo',
+  created () {
+    this.getStudentInfo()
+    this.totalItems = this.studentData.length
+    if (this.totalItems > this.pageSize) {
+      for (let index = 0; index < this.pageSize; index++) {
+        this.studentDataEnd.push(this.studentData[index])
+      }
+    } else {
+      this.studentDataEnd = this.studentData
     }
+  },
+  data () {
+    return {
+      studentData: [],
+      studentDataEnd: [],
+      currentPage: 1,
+      pageSize: 2,
+      totalItems: 0
+    }
+  },
+  methods: {
+    getStudentInfo () {
+      this.$axios.get('/admin/students')
+        .then(resp => {
+          this.studentData = resp.data.date
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    handleSizeChange (val) {
+      console.log('每页${val}条')
+      this.pageSize = val
+      this.handleCurrentChange(this.currentPage)
+    },
+    handleCurrentChange (val) {
+      console.log('当前页：${val}')
+      this.currentPage = val
+      this.currentChangePage(this.studentData)
+    },
+    currentChangePage (list) {
+      let from = (this.currentPage - 1) * this.pageSize
+      let to = this.currentPage * this.pageSize
+      this.studentDataEnd = []
+      for (; from < to; from++) {
+        if (list[from]) {
+          this.studentDataEnd.push(list[from])
+        }
+      }
+    },
+    updateStudentInfo (e) {
+      var formData = new FormData()
+      formData.append('temp-file', e.target.files[0])
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post('/admin/students', formData, config)
+        .then(resp => {
+          this.$message.success(resp.data.message)
+          this.getStudentInfo()
+        })
+        .catch(error => {
+          console.log()
+          this.$message.error('考生信息添加失败')
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>

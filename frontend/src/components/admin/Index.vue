@@ -32,19 +32,19 @@ export default {
 
   },
   methods: {
-      quit() {
-          this.$confirm('', '确定要退出系统吗？', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              center: 'true',
-              confirmButtonClass: 'messageButton',
-              cancelButtonClass: 'messageButton'
-          }).then(() => {
-              this.$store.commit('logout');
-              this.$router.replace('/admin/login');
-          }).catch(() => {
-          });
-      }
+    quit () {
+      this.$confirm('', '确定要退出系统吗？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        center: 'true',
+        confirmButtonClass: 'messageButton',
+        cancelButtonClass: 'messageButton'
+      }).then(() => {
+        this.$store.commit('logout')
+        this.$router.replace('/admin/login')
+      }).catch(() => {
+      })
+    }
   }
 }
 </script>

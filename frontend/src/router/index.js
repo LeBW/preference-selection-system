@@ -1,24 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
-import Index from '@/components/Index'
-import MajorInfo from "@/components/admin/MajorInfo";
+import PreferenceSelect from "@/components/student/PreferenceSelect";
+import Login from "@/components/student/Login";
 
 Vue.use(Router)
 
 export const router = new Router({
   routes: [
     {
-      path: '/',
-      name: 'Index',
-      component: Index,
-      children: [
-        {
-          path: 'MajorInfo',
-          name: 'MajorInfo',
-          component: MajorInfo
-        }
-      ]
+      path: '/preference',
+      name: 'Preference',
+      component: PreferenceSelect,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })

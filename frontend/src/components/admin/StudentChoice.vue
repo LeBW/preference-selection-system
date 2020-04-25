@@ -32,93 +32,92 @@
 </template>
 
 <script>
-    export default {
-        name: "StudentChoice",
-        data() {
-            return {
-                choicesData:[],
-                choicesDataEnd: [],
-                currentPage: 1,
-                pageSize: 2,
-                totalItems: 0
-            }
-        },
-        created() {
-            this.getChoiceInfo()
-            this.totalItems = this.choicesData.length
-            if(this.totalItems > this.pageSize){
-                for(let index = 0; index < this.pageSize; index++){
-                    this.choicesDataEnd.push(this.choicesData[index])
-                }
-            } else{
-                this.choicesDataEnd = this.choicesData
-            }
-        },
-        methods: {
-            getChoiceInfo() {
-                this.$axios.get('/admin/choices')
-                    .then(resp => {
-                        this.choicesData = resp.data.date
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            handleSizeChange() {
-                console.log('每页${val}条')
-                this.pageSize = val
-                this.handleCurrentChange(this.currentPage)
-            },
-            handleCurrentChange() {
-                console.log('当前页：${val}')
-                this.currentPage = val
-                this.currentChangePage(this.choicesData)
-            },
-            currentChangePage(list){
-                let from = (this.currentPage - 1) * this.pageSize
-                let to = this.currentPage * this.pageSize
-                this.choicesDataEnd = [];
-                for(; from < to; from++){
-                    if(list[from]){
-                        this.choicesDataEnd.push(list[from])
-                    }
-                }
-            },
-            exportChoiceInfo(e) {
-                let config = {
-                    responseType: 'blob'
-                }
-                this.$axios.get('/admin/export-choices', config)
-                    .then(resp => {
-                        // 获取的是文件流
-                        console.log(resp)
-                        this.downloadExcel(resp.data["temp-file"])
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            downloadExcel(data){
-                const blob = new Blob([data])
-                const fileName = "考生志愿信息"
-                if ('download' in document.createElement('a')){
-                    // 非IE下载
-                    const elink = document.createElement('a')
-                    elink.download = fileName
-                    elink.style.display = 'none'
-                    elink.href = URL.createObjectURL(blob)
-                    document.body.appendChild(elink)
-                    elink.click()
-                    URL.revokeObjectURL(elink.href) // 释放URL对象
-                    document.body.removeChild(elink)
-                }
-                else {
-                    // IE10+下载
-                    navigator.msSaveBlob(blob, fileName)
-                }
-            }
-        }
+export default {
+  name: 'StudentChoice',
+  data () {
+    return {
+      choicesData: [],
+      choicesDataEnd: [],
+      currentPage: 1,
+      pageSize: 2,
+      totalItems: 0
     }
+  },
+  created () {
+    this.getChoiceInfo()
+    this.totalItems = this.choicesData.length
+    if (this.totalItems > this.pageSize) {
+      for (let index = 0; index < this.pageSize; index++) {
+        this.choicesDataEnd.push(this.choicesData[index])
+      }
+    } else {
+      this.choicesDataEnd = this.choicesData
+    }
+  },
+  methods: {
+    getChoiceInfo () {
+      this.$axios.get('/admin/choices')
+        .then(resp => {
+          this.choicesData = resp.data.date
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    handleSizeChange () {
+      console.log('每页${val}条')
+      this.pageSize = val
+      this.handleCurrentChange(this.currentPage)
+    },
+    handleCurrentChange () {
+      console.log('当前页：${val}')
+      this.currentPage = val
+      this.currentChangePage(this.choicesData)
+    },
+    currentChangePage (list) {
+      let from = (this.currentPage - 1) * this.pageSize
+      let to = this.currentPage * this.pageSize
+      this.choicesDataEnd = []
+      for (; from < to; from++) {
+        if (list[from]) {
+          this.choicesDataEnd.push(list[from])
+        }
+      }
+    },
+    exportChoiceInfo (e) {
+      let config = {
+        responseType: 'blob'
+      }
+      this.$axios.get('/admin/export-choices', config)
+        .then(resp => {
+          // 获取的是文件流
+          console.log(resp)
+          this.downloadExcel(resp.data['temp-file'])
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    downloadExcel (data) {
+      const blob = new Blob([data])
+      const fileName = '考生志愿信息'
+      if ('download' in document.createElement('a')) {
+        // 非IE下载
+        const elink = document.createElement('a')
+        elink.download = fileName
+        elink.style.display = 'none'
+        elink.href = URL.createObjectURL(blob)
+        document.body.appendChild(elink)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL对象
+        document.body.removeChild(elink)
+      } else {
+        // IE10+下载
+        navigator.msSaveBlob(blob, fileName)
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>

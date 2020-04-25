@@ -35,47 +35,47 @@
 </template>
 
 <script>
-  export default {
-    name: 'Login',
-      data () {
-          return {
-              loginForm: {
-                  ticketNumber: '',
-                  name: '',
-                  idNumber: ''
-              },
-              rules: {
-                  ticketNumber: [{required: true, message: '', trigger: 'blur'}],
-                  name: [{required: true, message: '', trigger: 'blur'}],
-                  idNumber: [{required: true, message: '', trigger: 'blur'}]
-              },
-              loading: false
-          }
+export default {
+  name: 'Login',
+  data () {
+    return {
+      loginForm: {
+        ticketNumber: '',
+        name: '',
+        idNumber: ''
       },
-      methods: {
-          login () {
-              this.$axios.post('/student/login', {
-                  ticketNumber: this.loginForm.ticketNumber,
-                  name: this.loginForm.name,
-                  idNumber: this.loginForm.idNumber
-              })
-                  .then(resp => {
-                      if (resp.status === 200) {
-                          this.$store.commit('login', resp.data)
-                          this.$store.commit('curStudent', resp.data)
-                          // 跳转
-                          this.$router.replace({path: '/'})
-                      } else {
-                          this.$message.error('登录失败')
-                      }
-                  })
-                  .catch(error => {
-                      console.log(error)
-                      this.$message.error('登录失败')
-                  })
+      rules: {
+        ticketNumber: [{required: true, message: '', trigger: 'blur'}],
+        name: [{required: true, message: '', trigger: 'blur'}],
+        idNumber: [{required: true, message: '', trigger: 'blur'}]
+      },
+      loading: false
+    }
+  },
+  methods: {
+    login () {
+      this.$axios.post('/student/login', {
+        ticketNumber: this.loginForm.ticketNumber,
+        name: this.loginForm.name,
+        idNumber: this.loginForm.idNumber
+      })
+        .then(resp => {
+          if (resp.status === 200) {
+            this.$store.commit('login', resp.data.token)
+            this.$store.commit('curStudent', resp.data.student)
+            // 跳转
+            this.$router.replace({path: '/'})
+          } else {
+            this.$message.error('登录失败')
           }
-      }
+        })
+        .catch(error => {
+          console.log(error)
+          this.$message.error('登录失败')
+        })
+    }
   }
+}
 </script>
 
 <style scoped>
