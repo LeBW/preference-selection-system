@@ -37,3 +37,14 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
 
 ###
+GET http://localhost:8080/student/files
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+
+###
+GET http://localhost:8080/student/files/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+
+###
+

@@ -1,10 +1,11 @@
 package fudan.se.preferenceselectionsystem.controller;
 
 import fudan.se.preferenceselectionsystem.controller.request.StudentLoginRequest;
+import fudan.se.preferenceselectionsystem.domain.Attachment;
 import fudan.se.preferenceselectionsystem.domain.Major;
 import fudan.se.preferenceselectionsystem.domain.Student;
+import fudan.se.preferenceselectionsystem.repository.AttachmentRepository;
 import fudan.se.preferenceselectionsystem.security.jwt.JwtTokenUtil;
-import fudan.se.preferenceselectionsystem.service.CustomUserDetailsService;
 import fudan.se.preferenceselectionsystem.service.StudentService;
 import fudan.se.preferenceselectionsystem.utils.ChoicesOverview;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author LBW
@@ -22,16 +24,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-    private CustomUserDetailsService customUserDetailsService;
     private StudentService studentService;
     private JwtTokenUtil jwtTokenUtil;
+    private AttachmentRepository attachmentRepository;
 
     private final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
-    public StudentController(CustomUserDetailsService customUserDetailsService, StudentService studentService, JwtTokenUtil jwtTokenUtil) {
-        this.customUserDetailsService = customUserDetailsService;
+    public StudentController(StudentService studentService, JwtTokenUtil jwtTokenUtil, AttachmentRepository attachmentRepository) {
         this.studentService = studentService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.attachmentRepository = attachmentRepository;
     }
 
     @PostMapping("/login")
@@ -72,5 +74,15 @@ public class StudentController {
         logger.info("Student get Choices Overview: " + authentication.getName());
         List<ChoicesOverview> choicesOverviews = studentService.getChoicesOverview(authentication.getName());
         return ResponseEntity.ok(choicesOverviews);
+    }
+
+    @GetMapping("/files")
+    public Iterable<Attachment> getAllAttachments(Authentication authentication) {
+        return attachmentRepository.findAll();
+    }
+
+    @GetMapping("files/{id}")
+    public Optional<Attachment> getAttachmentById(@PathVariable("id") Long id) {
+        return attachmentRepository.findById(id);
     }
 }
