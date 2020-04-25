@@ -1,9 +1,6 @@
 package fudan.se.preferenceselectionsystem.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author LBW
@@ -16,9 +13,15 @@ public class Attachment {
 
     private String name;
 
+    @Lob
     private byte[] content;
 
     public Attachment() {}
+
+    public Attachment(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
 
     public Long getId() {

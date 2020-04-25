@@ -78,7 +78,7 @@ public class StudentController {
 
     @GetMapping("/files")
     public Iterable<Attachment> getAllAttachments(Authentication authentication) {
-        return attachmentRepository.findAll();
+        return attachmentRepository.getIdAndNameOnly();
     }
 
     @GetMapping("files/{id}")
