@@ -23,7 +23,7 @@ export default new Vuex.Store({
     setCurStudent (state, data) {
       // 记录当前student信息
       localStorage.setItem('curStudent', JSON.stringify(data))
-      state.curStudent = data
+      state.curStudent = JSON.stringify(data)
     }
   },
   actions: {

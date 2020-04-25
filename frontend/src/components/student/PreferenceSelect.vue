@@ -109,8 +109,10 @@ export default {
     }
   },
   created () {
-    // this.$set(this.student, this.$store.state.curStudent)
-    this.student = this.$store.state.curStudent
+    this.student = JSON.parse(this.$store.state.curStudent)
+    // console.log(JSON.stringify(this.$store.state.curStudent))
+    // alert(JSON.stringify(this.student))
+    // this.student = Object.assign({}, this.student, this.$store.state.curStudent)
 
     this.modifiedForm['first-choice-major'] = this.student['first-choice-major']
     this.modifiedForm['second-choice-major'] = this.student['second-choice-major']
@@ -143,6 +145,8 @@ export default {
       this.$axios.get('/student/info')
         .then(resp => {
           this.$store.commit('setCurStudent', resp.data)
+          this.student = Object.assign({}, this.student, JSON.parse(this.$store.state.curStudent))
+          //console.log(this.student['last-modify-time'] + ' ' + this.$store.state.curStudent['last-modify-time'])
         })
         .catch(error => {
           console.log(error)
@@ -234,7 +238,6 @@ export default {
           this.$message.success('提交成功')
           // 刷新个人信息
           this.getPersonInfo()
-          this.student = this.$store.state.curStudent
         })
         .catch(error => {
           console.log(error)
@@ -266,9 +269,12 @@ export default {
           this.modifiedForm['second-choice-major'] = secMajor
 
           if (val.split('－').length === 1){
-            
+             this.modifiedForm['second-choice-direction'] = ''
           }
-          this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
+          else{
+            this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
+          }
+          
         }
       } else {
         // 学硕 不与报考专业相同
@@ -277,7 +283,14 @@ export default {
         } else {
           // 更新学生的信息
           this.modifiedForm['second-choice-major'] = secMajor
-          this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
+
+          if(val.split('－').length === 1){
+            this.modifiedForm['second-choice-direction'] = ''
+          }
+          else{
+            this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
+          }
+          
         }
       }
     }
