@@ -147,7 +147,7 @@ public class Student {
         this.secondChoiceDirection = secondChoiceDirection;
     }
 
-    public boolean isAdjustMajor() {
+    public boolean getAdjustMajor() {
         return adjustMajor;
     }
 
@@ -155,7 +155,7 @@ public class Student {
         this.adjustMajor = adjustMajor;
     }
 
-    public boolean isAdjustDegreeType() {
+    public boolean getAdjustDegreeType() {
         return adjustDegreeType;
     }
 

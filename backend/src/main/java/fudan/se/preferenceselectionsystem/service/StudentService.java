@@ -35,4 +35,21 @@ public class StudentService {
 
         return studentRepository.findByTicketNumber(ticketNumber);
     }
+
+    public Student getPersonalInfo(String ticketNumber) {
+        return studentRepository.findByTicketNumber(ticketNumber);
+    }
+
+    public void modifyChoice(String ticketNumber, Student request) {
+        Student student = studentRepository.findByTicketNumber(ticketNumber);
+        //modify the choice
+        student.setFirstChoiceMajor(request.getFirstChoiceMajor());
+        student.setFirstChoiceDirection(request.getFirstChoiceDirection());
+        student.setSecondChoiceMajor(request.getSecondChoiceMajor());
+        student.setSecondChoiceDirection(request.getSecondChoiceDirection());
+        student.setAdjustDegreeType(request.getAdjustDegreeType());
+        student.setAdjustMajor(request.getAdjustMajor());
+        //save into database
+        studentRepository.save(student);
+    }
 }

@@ -8,3 +8,20 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:8080/student/info
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc3ODAyMzIsImV4cCI6MTU4Nzc5ODIzMn0.LE8q1dQZL23ladHJww3LN6761_35z7jna-7NbWg7CcPq-42VOOeAUcDzmj3AbtM6oOBYxMX8j_WBzXWLycWIPQ
+
+###
+POST http://localhost:8080/student/choice
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc3ODAyMzIsImV4cCI6MTU4Nzc5ODIzMn0.LE8q1dQZL23ladHJww3LN6761_35z7jna-7NbWg7CcPq-42VOOeAUcDzmj3AbtM6oOBYxMX8j_WBzXWLycWIPQ
+
+{
+  "first-choice-major": "计算机系统结构",
+  "first-choice-direction": "分布式存储系统与网络",
+  "second-choice-major": "网络空间安全",
+  "second-choice-direction": "网络安全",
+  "adjust-major": true,
+  "adjust-degree-type": true
+}

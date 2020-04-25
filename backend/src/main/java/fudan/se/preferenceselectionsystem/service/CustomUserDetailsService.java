@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (student != null) {
             String password = "{noop}" + student.getIdNumber();
-            return new User(student.getTicketNumber(), password, Collections.singleton(new SimpleGrantedAuthority("student")));
+            return new User(student.getTicketNumber(), password, Collections.singleton(new SimpleGrantedAuthority("ROLE_STUDENT")));
         }
         throw new UsernameNotFoundException("User: " + username + " not found");
     }
