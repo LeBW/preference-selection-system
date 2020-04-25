@@ -194,6 +194,7 @@ export default {
           this.getPersonInfo()
         })
         .catch(error => {
+          console.log(error)
           this.$message.error('提交失败')
         })
     },
