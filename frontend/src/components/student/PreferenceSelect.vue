@@ -138,7 +138,7 @@ export default {
    
     this.getMajorsInfo()
     // this.getFilesInfo()
-    // this.getChoicesOverview()
+    this.getChoicesOverview()
   },
   methods: {
     getPersonInfo () {
@@ -156,7 +156,7 @@ export default {
       // 获取志愿填报状况
       this.$axios.get('/student/choices-overview')
         .then(resp => {
-          this.choiceInfo = resp.data.data
+          this.choiceInfo = resp.data
         })
         .catch(error => {
           console.log(error)
@@ -167,7 +167,7 @@ export default {
       // 获取文件列表
       this.$axios.get('/student/files')
         .then(resp => {
-          this.filesInfo = resp.data.date
+          this.filesInfo = resp.data
         })
         .catch(error => {
           console.log(error)
@@ -238,6 +238,7 @@ export default {
           this.$message.success('提交成功')
           // 刷新个人信息
           this.getPersonInfo()
+          this.getChoicesOverview()
         })
         .catch(error => {
           console.log(error)
