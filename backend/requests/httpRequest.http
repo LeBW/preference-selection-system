@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/student/info
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4MDI4NzksImV4cCI6MTU4NzgyMDg3OX0.hVg-12wAvqKtVZGKO9y7G-fPOO0MB70_38LpUMxlPHX-Rxyu127MBDGbRk75d3y0GYdJvcMIG8mX4ZflmalmTw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
 
 ###
 POST http://localhost:8080/student/choice
@@ -29,4 +29,11 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4M
 ###
 GET http://localhost:8080/student/major
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4MDI4NzksImV4cCI6MTU4NzgyMDg3OX0.hVg-12wAvqKtVZGKO9y7G-fPOO0MB70_38LpUMxlPHX-Rxyu127MBDGbRk75d3y0GYdJvcMIG8mX4ZflmalmTw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+
+###
+GET http://localhost:8080/student/choices-overview
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+
+###

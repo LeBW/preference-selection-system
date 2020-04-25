@@ -4,6 +4,7 @@ import fudan.se.preferenceselectionsystem.domain.Major;
 import fudan.se.preferenceselectionsystem.domain.Student;
 import fudan.se.preferenceselectionsystem.repository.MajorRepository;
 import fudan.se.preferenceselectionsystem.repository.StudentRepository;
+import fudan.se.preferenceselectionsystem.utils.ChoicesOverview;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,5 +68,21 @@ public class StudentService {
         // get majors by degree type.
         String degreeType = student.getDegreeType();
         return majorRepository.findByDegreeType(degreeType);
+    }
+
+    public List<ChoicesOverview> getChoicesOverview(String ticketNumber) {
+        Student student = studentRepository.findByTicketNumber(ticketNumber);
+        // get choices overview
+        ArrayList<ChoicesOverview> choicesOverviews = new ArrayList<>();
+
+        List<String> majors = majorRepository.findDistinctMajors();
+        for (String major: majors) {
+            ChoicesOverview choicesOverview = new ChoicesOverview();
+            choicesOverview.setMajor(major);
+            choicesOverview.setSpots(majorRepository.findFirstByMajor(major).getSpots());
+            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByFirstChoiceMajorEquals(major));
+            choicesOverviews.add(choicesOverview);
+        }
+        return choicesOverviews;
     }
 }

@@ -6,6 +6,7 @@ import fudan.se.preferenceselectionsystem.domain.Student;
 import fudan.se.preferenceselectionsystem.security.jwt.JwtTokenUtil;
 import fudan.se.preferenceselectionsystem.service.CustomUserDetailsService;
 import fudan.se.preferenceselectionsystem.service.StudentService;
+import fudan.se.preferenceselectionsystem.utils.ChoicesOverview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -61,8 +62,15 @@ public class StudentController {
 
     @GetMapping("/major")
     public ResponseEntity<?> getMajorInfo(Authentication authentication) {
-        logger.info("Student get majors: ", authentication.getName());
+        logger.info("Student get majors: " + authentication.getName());
         List<Major> majorInfo = studentService.getMajorInfo(authentication.getName());
         return ResponseEntity.ok(majorInfo);
+    }
+
+    @GetMapping("/choices-overview")
+    public ResponseEntity<?> getChoicesOverview(Authentication authentication) {
+        logger.info("Student get Choices Overview: " + authentication.getName());
+        List<ChoicesOverview> choicesOverviews = studentService.getChoicesOverview(authentication.getName());
+        return ResponseEntity.ok(choicesOverviews);
     }
 }
