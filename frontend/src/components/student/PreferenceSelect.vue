@@ -82,7 +82,9 @@
             <el-button type="primary"
                        style="width: 30%; background: #afb4db; border: none"
                        v-on:click="submitInfo">提交</el-button>
-             <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
+            <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
+            <p v-if="student['last-modify-time']">上次提交第一志愿：{{student['first-choice-major']}}</p>
+            <p v-if="student['last-modify-time']">上次提交第二志愿：{{student['second-choice-major']}}</p>
           </div>
         </el-col>
       </el-row>
@@ -120,22 +122,20 @@ export default {
     this.modifiedForm['first-choice-direction'] = this.student['first-choice-direction']
     this.modifiedForm['second-choice-direction'] = this.student['second-choice-direction']
 
-    if(this.student['last-modify-time'] !== ''){
-      if (this.student['first-choice-direction'] !== ''){
+    if (this.student['last-modify-time'] !== '') {
+      if (this.student['first-choice-direction'] !== '') {
         this.firstChoice = this.student['first-choice-major'] + '－' + this.student['first-choice-direction']
+      } else {
+        this.firstChoice = this.student['first-choice-major']
       }
-      else{
-         this.firstChoice = this.student['first-choice-major']
-      }
-      
-      if( this.student['second-choice-direction'] !== ''){
+
+      if (this.student['second-choice-direction'] !== '') {
         this.secondChoice = this.student['second-choice-major'] + '－' + this.student['second-choice-direction']
-      }
-      else{
-         this.secondChoice = this.student['second-choice-major']
+      } else {
+        this.secondChoice = this.student['second-choice-major']
       }
     }
-   
+
     this.getMajorsInfo()
     // this.getFilesInfo()
     this.getChoicesOverview()
@@ -146,7 +146,7 @@ export default {
         .then(resp => {
           this.$store.commit('setCurStudent', resp.data)
           this.student = Object.assign({}, this.student, JSON.parse(this.$store.state.curStudent))
-          //console.log(this.student['last-modify-time'] + ' ' + this.$store.state.curStudent['last-modify-time'])
+          // console.log(this.student['last-modify-time'] + ' ' + this.$store.state.curStudent['last-modify-time'])
         })
         .catch(error => {
           console.log(error)
@@ -269,13 +269,11 @@ export default {
           // 更新学生的信息
           this.modifiedForm['second-choice-major'] = secMajor
 
-          if (val.split('－').length === 1){
-             this.modifiedForm['second-choice-direction'] = ''
-          }
-          else{
+          if (val.split('－').length === 1) {
+            this.modifiedForm['second-choice-direction'] = ''
+          } else {
             this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
           }
-          
         }
       } else {
         // 学硕 不与报考专业相同
@@ -285,13 +283,11 @@ export default {
           // 更新学生的信息
           this.modifiedForm['second-choice-major'] = secMajor
 
-          if(val.split('－').length === 1){
+          if (val.split('－').length === 1) {
             this.modifiedForm['second-choice-direction'] = ''
-          }
-          else{
+          } else {
             this.modifiedForm['second-choice-direction'] = val.split('－')[1].trim()
           }
-          
         }
       }
     }
