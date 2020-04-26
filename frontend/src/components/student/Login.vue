@@ -27,7 +27,7 @@
             </el-form-item>
             <el-form-item style="width: 100%">
                 <el-button type="primary"
-                           style="width: 40%; background: #afb4db; border: none; height: 40%"
+                           style="background: #afb4db; border: none; text-align: center"
                            v-on:click="login">登录</el-button>
             </el-form-item>
         </el-form>
@@ -96,15 +96,15 @@ export default {
         border-radius: 15px;
         background-clip: padding-box;
         margin: 90px auto;
-        width: 50%;
-        height: 60%;
-        padding: 35px 35px 15px 35px;
+        width: 30%;
+        height: 40%;
+        padding: 35px 35px 35px 35px;
         background: #fff;
         border: 1px solid #eaeaea;
         box-shadow: 0 0 25px #cac6c6;
     }
     .login_title {
-        margin: 0px auto 40px auto;
+        margin: auto  auto;
         text-align: center;
         color: #494e8f;
     }
