@@ -175,10 +175,15 @@ export default {
     },
     getFileById (index, row) {
       // 下载相关文件
-      this.$axios.get('/student/files/' + row['id'])
+      this.$axios.get('/student/files/' + row['id'], {
+        headers: {
+          'Content-Type': 'application/octet-stream'
+        },
+        responseType: 'blob'
+      })
         .then(resp => {
           // 获得的是文件流
-          this.downloadFile(resp.data.content, resp.data.name)
+          this.downloadFile(resp.data, row['name'])
         })
         .catch(error => {
           console.log(error)
@@ -187,6 +192,7 @@ export default {
     downloadFile (data, name) {
       // 文件数据打包
       const blob = new Blob([data])
+      // const blob = data
       if ('download' in document.createElement('a')) {
         // 非IE下载
         const elink = document.createElement('a')
