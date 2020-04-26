@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <el-main>
       <el-row>
         <h2>2020年复旦大学计算机科学技术学院研究生复试志愿填报</h2>
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :span="10">
+        <el-col :span="12">
           <div class="base_info">
             <p>准考证号：{{student['ticket-number']}}</p>
             <p>考生姓名：{{student['name']}}</p>
@@ -14,7 +14,7 @@
           </div>
         </el-col>
 
-        <el-col :span="10">
+        <el-col :span="12">
           <div>
             <span>名额与填报志愿人数</span>
             <el-button size="mini" @click="getChoicesOverview">刷新</el-button>
@@ -29,12 +29,12 @@
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :span="10">
+        <el-col :span="12">
           <div style="padding-left: 10px">
             <h3>相关文件列表</h3>
             <el-table :data="filesInfo">
               <el-table-column prop="name" label="文件名"></el-table-column>
-              <el-table-column fixed="right" label="操作">
+              <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
@@ -45,7 +45,7 @@
           </div>
         </el-col>
 
-        <el-col :span="10">
+        <el-col :span="12">
           <div>
             <h3>请选择第一志愿</h3>
             <p v-if="student['degree-type'] === '学术学位'">{{student['major']}}</p>
@@ -80,17 +80,21 @@
             <br/>
 
             <el-button type="primary"
-                       style="width: 30%; background: #afb4db; border: none"
+                       style="background: #afb4db; border: none"
                        v-on:click="submitInfo">提交</el-button>
-            <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
-            <p v-if="student['last-modify-time']">上次提交第一志愿：{{student['first-choice-major']}}</p>
-            <p v-if="student['last-modify-time']">上次提交第二志愿：{{student['second-choice-major']}}</p>
           </div>
         </el-col>
       </el-row>
+
+      <el-row>
+        <p v-if="student['last-modify-time']">上次志愿修改时间：{{student['last-modify-time']}}</p>
+        <p v-if="student['last-modify-time']">当前提交第一志愿：{{firstChoice}}</p>
+        <p v-if="student['last-modify-time']">当前提交第二志愿：{{secondChoice}}</p>
+      </el-row>
+
       <br/>
       <br/>
-    </div>
+    </el-main>
 </template>
 
 <script>
@@ -123,13 +127,13 @@ export default {
     this.modifiedForm['second-choice-direction'] = this.student['second-choice-direction']
 
     if (this.student['last-modify-time'] !== '') {
-      if (this.student['first-choice-direction'] !== '') {
+      if (this.student['first-choice-direction'] !== '' && this.student['first-choice-direction'] !== null) {
         this.firstChoice = this.student['first-choice-major'] + '－' + this.student['first-choice-direction']
       } else {
         this.firstChoice = this.student['first-choice-major']
       }
 
-      if (this.student['second-choice-direction'] !== '') {
+      if (this.student['second-choice-direction'] !== '' && this.student['second-choice-direction'] !== null) {
         this.secondChoice = this.student['second-choice-major'] + '－' + this.student['second-choice-direction']
       } else {
         this.secondChoice = this.student['second-choice-major']

@@ -7,7 +7,7 @@
                  label-width="0px"
                  v-loading="loading">
             <h3 class="login_title">登录</h3>
-            <el-form-item prop="ticketName">
+            <el-form-item prop="ticketNumber">
                 <el-input type="text"
                           v-model="loginForm.ticketNumber"
                           auto-complete="off"
@@ -27,7 +27,7 @@
             </el-form-item>
             <el-form-item style="width: 100%">
                 <el-button type="primary"
-                           style="width: 40%; background: #afb4db; border: none"
+                           style="width: 40%; background: #afb4db; border: none; height: 40%"
                            v-on:click="login">登录</el-button>
             </el-form-item>
         </el-form>
@@ -45,9 +45,9 @@ export default {
         idNumber: ''
       },
       rules: {
-        ticketNumber: [{required: true, message: '', trigger: 'blur'}],
-        name: [{required: true, message: '', trigger: 'blur'}],
-        idNumber: [{required: true, message: '', trigger: 'blur'}]
+        ticketNumber: [{required: true, message: '请输入准考证号！', trigger: 'blur'}],
+        name: [{required: true, message: '请输入姓名！', trigger: 'blur'}],
+        idNumber: [{required: true, message: '请输入证件证号！', trigger: 'blur'}]
       },
       loading: false
     }
@@ -96,7 +96,8 @@ export default {
         border-radius: 15px;
         background-clip: padding-box;
         margin: 90px auto;
-        width: 350px;
+        width: 50%;
+        height: 60%;
         padding: 35px 35px 15px 35px;
         background: #fff;
         border: 1px solid #eaeaea;
