@@ -10,10 +10,14 @@ import fudan.se.preferenceselectionsystem.service.StudentService;
 import fudan.se.preferenceselectionsystem.utils.ChoicesOverview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -82,7 +86,10 @@ public class StudentController {
     }
 
     @GetMapping("files/{id}")
-    public Optional<Attachment> getAttachmentById(@PathVariable("id") Long id) {
-        return attachmentRepository.findById(id);
+    public ResponseEntity<?> getAttachmentById(@PathVariable("id") Long id) throws UnsupportedEncodingException {
+        Attachment attachment = attachmentRepository.findById(id).orElse(null);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + URLEncoder.encode(attachment.getName(), "UTF-8") + "\"")
+                .body(attachment.getContent());
     }
 }

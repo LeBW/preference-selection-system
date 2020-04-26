@@ -137,7 +137,7 @@ export default {
     }
 
     this.getMajorsInfo()
-    // this.getFilesInfo()
+    this.getFilesInfo()
     this.getChoicesOverview()
   },
   methods: {

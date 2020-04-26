@@ -44,7 +44,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4M
 ###
 GET http://localhost:8080/student/files/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4NzE0NDgsImV4cCI6MTU4Nzg4OTQ0OH0.Q8MsQECfsGwkKCKLc3YoRz8k7BdEE32Gy00asU5hFNer3VMaMPVcB_mT2eEv6siOZ7K-5ZTPjMJUk_Cz06yR2Q
 
 ###
 

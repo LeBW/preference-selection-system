@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends CrudRepository<Student, Long> {
     Student findByTicketNumber(String ticketNumber);
 
-    Integer countByFirstChoiceMajorEquals(String firstChoiceMajor);
+    Integer countByDegreeTypeEqualsAndFirstChoiceMajorEquals(String degreeType, String firstChoiceMajor);
 }

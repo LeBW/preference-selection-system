@@ -72,15 +72,15 @@ public class StudentService {
 
     public List<ChoicesOverview> getChoicesOverview(String ticketNumber) {
         Student student = studentRepository.findByTicketNumber(ticketNumber);
-        // get choices overview
+        // get choices overviewby degree type
         ArrayList<ChoicesOverview> choicesOverviews = new ArrayList<>();
 
-        List<String> majors = majorRepository.findDistinctMajors();
+        List<String> majors = majorRepository.findDistinctMajorsByDegreeType(student.getDegreeType());
         for (String major: majors) {
             ChoicesOverview choicesOverview = new ChoicesOverview();
             choicesOverview.setMajor(major);
             choicesOverview.setSpots(majorRepository.findFirstByMajor(major).getSpots());
-            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByFirstChoiceMajorEquals(major));
+            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByDegreeTypeEqualsAndFirstChoiceMajorEquals(student.getDegreeType(), major));
             choicesOverviews.add(choicesOverview);
         }
         return choicesOverviews;
