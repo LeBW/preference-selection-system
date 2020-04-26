@@ -16,8 +16,8 @@
 
         <el-col :span="12">
           <div>
-            <span>名额与填报志愿人数</span>
-            <el-button size="mini" @click="getChoicesOverview">刷新</el-button>
+            <span style="padding: 5%; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px;margin-inline-end: 0px;font-weight: bold;">名额与填报志愿人数</span>
+            <el-button type="primary" style="background: #afb4db; border: none" size="mini" @click="getChoicesOverview">刷新</el-button>
             <el-table :data="choiceInfo">
               <el-table-column v-if="student['degree-type'] === '学术学位'" prop="major" label="专业"></el-table-column>
               <el-table-column v-else prop="major" label="学科方向"></el-table-column>
@@ -37,6 +37,7 @@
               <el-table-column label="操作">
                 <template slot-scope="scope">
                   <el-button
+                    style="background: #afb4db; border: none"
                     size="mini"
                     @click="getFileById(scope.$index, scope.row)">下载</el-button>
                 </template>
@@ -306,5 +307,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
