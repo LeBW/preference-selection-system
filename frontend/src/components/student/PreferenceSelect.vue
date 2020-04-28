@@ -303,7 +303,7 @@ export default {
       }
       // 更新学生的信息
       this.modifiedForm['first-choice-major'] = firstMajor
-      if (val.split('-').length === 1) {
+      if (val.split('－').length === 1) {
         this.modifiedForm['first-choice-direction'] = ''
       } else {
         this.modifiedForm['first-choice-direction'] = val.split('－')[1].trim()
