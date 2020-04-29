@@ -81,10 +81,10 @@
               <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
               <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
             </div>
-            <div v-else>
-              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '专业学位'">愿意调剂到其他学科方向</el-checkbox>
-              <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
-            </div>
+<!--            <div v-else>-->
+<!--              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '专业学位'">愿意调剂到其他学科方向</el-checkbox>-->
+<!--              <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>-->
+<!--            </div>-->
 
             <br/>
 

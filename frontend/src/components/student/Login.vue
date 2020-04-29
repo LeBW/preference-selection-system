@@ -47,7 +47,7 @@ export default {
       rules: {
         ticketNumber: [{required: true, message: '请输入准考证号！', trigger: 'blur'}],
         name: [{required: true, message: '请输入姓名！', trigger: 'blur'}],
-        idNumber: [{required: true, message: '请输入证件证号！', trigger: 'blur'}]
+        idNumber: [{required: true, message: '请输入考生报名号！', trigger: 'blur'}]
       },
       loading: false
     }
