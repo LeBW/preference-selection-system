@@ -247,17 +247,27 @@ export default {
           this.majorInfo = resp.data
 
           // 专硕和学硕信息分开
-          for (let i = 0; i < this.majorInfo.length; i++) {
-            if (this.majorInfo[i]['degree-type'] === '学术学位') {
-              // 是否和第一志愿专业相同
-              if (this.majorInfo[i]['major'] !== this.student['major']) {
-                this.researchMajor.push(this.majorInfo[i])
-              }
-            } else {
+          if (this.student['degree-type'] === '学术学位') {
+            for (let i = 0; i < this.majorInfo.length; i++) {
+              this.researchMajor.push(this.majorInfo[i])
+            }
+          } else {
+            for (let i = 0; i < this.majorInfo.length; i++) {
               this.profMajorOne.push(this.majorInfo[i])
               this.profMajorTwo.push(this.majorInfo[i])
             }
           }
+          // for (let i = 0; i < this.majorInfo.length; i++) {
+          //   if (this.majorInfo[i]['degree-type'] === '学术学位') {
+          //     // 是否和第一志愿专业相同
+          //     if (this.majorInfo[i]['major'] !== this.student['major']) {
+          //       this.researchMajor.push(this.majorInfo[i])
+          //     }
+          //   } else {
+          //     this.profMajorOne.push(this.majorInfo[i])
+          //     this.profMajorTwo.push(this.majorInfo[i])
+          //   }
+          // }
         })
         .catch(error => {
           console.log(error)
