@@ -23,7 +23,7 @@
                 <el-input type="text"
                           v-model="loginForm.idNumber"
                           auto-complete="off"
-                          placeholder="证件号码"></el-input>
+                          placeholder="考生报名号"></el-input>
             </el-form-item>
             <el-form-item style="width: 100%">
                 <el-button type="primary"

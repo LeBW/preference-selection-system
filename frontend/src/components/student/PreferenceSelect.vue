@@ -1,7 +1,8 @@
 <template>
     <el-main>
       <el-row>
-        <h2>2020年复旦大学计算机科学技术学院研究生复试志愿填报</h2>
+        <h2 v-if="student['department'].indexOf('计算机科学') !== -1">2020年复旦大学计算机科学技术学院研究生复试志愿填报</h2>
+        <h2 v-else>2020年复旦大学软件学院研究生复试志愿填报</h2>
       </el-row>
 
       <el-row :gutter="20">
@@ -19,8 +20,8 @@
             <span style="padding: 5%; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px;margin-inline-end: 0px;font-weight: bold;">名额与填报志愿人数</span>
             <el-button type="primary" style="background: #afb4db; border: none" size="mini" @click="getChoicesOverview">刷新</el-button>
             <el-table :data="choiceInfo">
-              <el-table-column v-if="student['degree-type'] === '学术学位'" prop="major" label="专业"></el-table-column>
-              <el-table-column v-else prop="major" label="学科方向"></el-table-column>
+<!--              <el-table-column v-if="student['degree-type'] === '学术学位'" prop="major" label="专业"></el-table-column>-->
+              <el-table-column prop="major" label="志愿方向"></el-table-column>
               <el-table-column prop="spots" label="统考招生名额"></el-table-column>
               <el-table-column prop="first-choice-major-numbers" label="第一志愿人数"></el-table-column>
             </el-table>
@@ -76,8 +77,15 @@
             </el-select>
             <br/>
 
-            <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
-            <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
+            <div v-if="student['department'].indexOf('计算机科学') !== -1">
+              <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
+              <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
+            </div>
+            <div v-else>
+              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '专业学位'">愿意调剂到其他学科方向</el-checkbox>
+              <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
+            </div>
+
             <br/>
 
             <el-button type="primary"
@@ -298,7 +306,7 @@ export default {
           this.profMajorTwo.push(this.majorInfo[i])
         }
       }
-      if (firstMajor === this.secondChoice.split('－')[0].trim()) {
+      if (this.secondChoice !== null && firstMajor === this.secondChoice.split('－')[0].trim()) {
         this.$message.warning('第一志愿和第二志愿的学科方向应不同！请重新选择！')
       }
       // 更新学生的信息
@@ -314,7 +322,7 @@ export default {
       let secMajor = val.split('－')[0].trim()
 
       if (this.student['degree-type'] === '专业学位') {
-        if (secMajor === this.firstChoice.split('－')[0].trim()) {
+        if (this.firstChoice !== null && secMajor === this.firstChoice.split('－')[0].trim()) {
           this.$message.error('第一志愿和第二志愿的学科方向应不同！请重新选择！')
         } else {
           // 更新学生的信息
