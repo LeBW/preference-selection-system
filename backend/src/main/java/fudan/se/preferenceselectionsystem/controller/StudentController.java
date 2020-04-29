@@ -69,7 +69,7 @@ public class StudentController {
     @GetMapping("/major")
     public ResponseEntity<?> getMajorInfo(Authentication authentication) {
         logger.info("Student get majors: " + authentication.getName());
-        List<Major> majorInfo = studentService.getMajorInfo(authentication.getName());
+        Iterable<Major> majorInfo = studentService.getMajorInfo(authentication.getName());
         return ResponseEntity.ok(majorInfo);
     }
 

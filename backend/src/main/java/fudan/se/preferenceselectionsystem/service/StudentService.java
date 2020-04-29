@@ -63,16 +63,22 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    public List<Major> getMajorInfo(String ticketNumber) {
+    public Iterable<Major> getMajorInfo(String ticketNumber) {
         Student student = studentRepository.findByTicketNumber(ticketNumber);
-        // get majors by degree type.
         String degreeType = student.getDegreeType();
+        if (student.getDepartment().contains("软件")) {
+            if (degreeType.contains("学术"))
+                return majorRepository.findAll();
+            else
+                return majorRepository.findByDegreeType(degreeType);
+        }
+        // get majors by degree type.
         return majorRepository.findByDegreeType(degreeType);
     }
 
     public List<ChoicesOverview> getChoicesOverview(String ticketNumber) {
         Student student = studentRepository.findByTicketNumber(ticketNumber);
-        // get choices overviewby degree type
+        // get choices overview by degree type
         ArrayList<ChoicesOverview> choicesOverviews = new ArrayList<>();
 
         List<String> majors = majorRepository.findDistinctMajorsByDegreeType(student.getDegreeType());
