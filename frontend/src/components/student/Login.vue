@@ -64,7 +64,7 @@ export default {
             this.$store.commit('login', resp.data.token)
             this.$store.commit('setCurStudent', resp.data.student)
             // 跳转
-            this.$router.replace({path: '/'})
+            this.$router.replace({path: '/preference'})
           } else {
             this.$message.error('登录失败')
           }

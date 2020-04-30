@@ -7,12 +7,13 @@ import Login from '@/components/student/Login'
 Vue.use(Router)
 
 export const router = new Router({
+  // base: 'tools/project',
   routes: [
     {
       path: '/',
       name: 'Index',
-      redirect: '/preference',
-      component: PreferenceSelect
+      redirect: '/login',
+      component: Login
     },
     {
       path: '/preference',

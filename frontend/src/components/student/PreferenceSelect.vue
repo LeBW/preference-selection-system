@@ -249,7 +249,9 @@ export default {
           // 专硕和学硕信息分开
           if (this.student['degree-type'] === '学术学位') {
             for (let i = 0; i < this.majorInfo.length; i++) {
-              this.researchMajor.push(this.majorInfo[i])
+              if (this.majorInfo[i]['major'] !== this.student['major']) {
+                this.researchMajor.push(this.majorInfo[i])
+              }
             }
           } else {
             for (let i = 0; i < this.majorInfo.length; i++) {
@@ -257,6 +259,7 @@ export default {
               this.profMajorTwo.push(this.majorInfo[i])
             }
           }
+          // console.log(this.researchMajor)
           // for (let i = 0; i < this.majorInfo.length; i++) {
           //   if (this.majorInfo[i]['degree-type'] === '学术学位') {
           //     // 是否和第一志愿专业相同
