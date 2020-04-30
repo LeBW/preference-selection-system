@@ -24,9 +24,11 @@ public class PreferenceSelectionSystemApplication {
                     Student student = new Student();
                     student.setTicketNumber("123456");
                     student.setName("李博文");
-                    student.setIdNumber("421122199702250017");
+                    student.setIdNumber("123456");
                     student.setDepartment("软件学院");
                     student.setMajor("软件工程");
+                    student.setDegreeType("学术学位");
+                    student.setFirstChoiceMajor("软件工程");
                     studentRepository.save(student);
                 }
 
