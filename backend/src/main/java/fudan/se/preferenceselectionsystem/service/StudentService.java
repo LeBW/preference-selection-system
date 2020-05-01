@@ -83,6 +83,9 @@ public class StudentService {
 
         List<String> majors = majorRepository.findDistinctMajorsByDegreeType(student.getDegreeType());
         for (String major: majors) {
+            if (major.equals("无")) {
+                continue;
+            }
             ChoicesOverview choicesOverview = new ChoicesOverview();
             choicesOverview.setMajor(major);
             choicesOverview.setSpots(majorRepository.findFirstByMajor(major).getSpots());
