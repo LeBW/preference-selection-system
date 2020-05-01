@@ -107,8 +107,10 @@
           <div v-if="student['department'].indexOf('软件') === -1 || student['degree-type'] === '学术学位'">
             <p v-if="adjustMajor === true">愿意调剂到其他志愿方向</p>
             <p v-else style="color: firebrick">不愿意调剂到其他志愿方向</p>
-            <p v-if="adjustDegreeType === true && student['degree-type'] === '学术学位'">愿意调剂为专业硕士</p>
-            <p v-else-if="student['degree-type'] === '学术学位' && adjustDegreeType === false" style="color: firebrick">不愿意调剂为专业硕士</p>
+            <div v-if="student['department'].indexOf('软件') === -1">
+              <p v-if="adjustDegreeType === true && student['degree-type'] === '学术学位'">愿意调剂为专业硕士</p>
+              <p v-else-if="student['degree-type'] === '学术学位' && adjustDegreeType === false" style="color: firebrick">不愿意调剂为专业硕士</p>
+            </div>
           </div>
 
           <p>当前志愿提交时间：{{student['last-modify-time']}}</p>
