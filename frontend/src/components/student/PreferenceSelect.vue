@@ -78,11 +78,11 @@
             <br/>
 
             <div v-if="student['department'].indexOf('计算机科学') !== -1">
-              <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
+              <el-checkbox v-model="student['adjust-major']">愿意调剂到其他志愿方向</el-checkbox>
               <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
             </div>
             <div v-else>
-              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '学术学位'">愿意调剂到其他学科方向</el-checkbox>
+              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '学术学位'">愿意调剂到其他志愿方向</el-checkbox>
 <!--              <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>-->
             </div>
 
@@ -105,8 +105,8 @@
 
           <!--   软院专硕不显示    -->
           <div v-if="student['department'].indexOf('软件') === -1 || student['degree-type'] === '学术学位'">
-            <p v-if="adjustMajor === true">愿意调剂到其他学科方向</p>
-            <p v-else style="color: firebrick">不愿意调剂到其他学科方向</p>
+            <p v-if="adjustMajor === true">愿意调剂到其他志愿方向</p>
+            <p v-else style="color: firebrick">不愿意调剂到其他志愿方向</p>
             <p v-if="adjustDegreeType === true">愿意调剂为专业硕士</p>
             <p v-else style="color: firebrick">不愿意调剂为专业硕士</p>
           </div>
@@ -293,7 +293,7 @@ export default {
           this.$message.error('第一志愿和第二志愿的专业应不同！请重新选择！')
           return
         } else {
-          this.$message.error('第一志愿和第二志愿的学科方向应不同！请重新选择！')
+          this.$message.error('第一志愿和第二志愿的志愿方向应不同！请重新选择！')
           return
         }
       }
@@ -325,7 +325,7 @@ export default {
         }
       }
       if (this.secondChoice !== null && firstMajor === this.secondChoice.split('－')[0].trim()) {
-        this.$message.warning('第一志愿和第二志愿的学科方向应不同！请重新选择！')
+        this.$message.warning('第一志愿和第二志愿的志愿方向应不同！请重新选择！')
       }
       // 更新学生的信息
       this.modifiedForm['first-choice-major'] = firstMajor
@@ -351,7 +351,7 @@ export default {
 
       if (this.student['degree-type'] === '专业学位') {
         if (this.firstChoice !== null && secMajor === this.firstChoice.split('－')[0].trim()) {
-          this.$message.error('第一志愿和第二志愿的学科方向应不同！请重新选择！')
+          this.$message.error('第一志愿和第二志愿的志愿方向应不同！请重新选择！')
         } else {
           // 更新学生的信息
           this.modifiedForm['second-choice-major'] = secMajor

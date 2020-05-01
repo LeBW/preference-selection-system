@@ -4,7 +4,7 @@
 
 const path = require('path')
 
-const assetsPublicPath = '/preference/cs/'
+const assetsPublicPath = '/preference/se/'
 
 module.exports = {
   dev: {
