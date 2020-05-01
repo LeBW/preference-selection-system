@@ -4,15 +4,15 @@
 
 const path = require('path')
 
-const assetsPublicPath = './'
+const assetsPublicPath = '/preference/se/'
 
 module.exports = {
   dev: {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    // assetsPublicPath: assetsPublicPath,
+    // assetsPublicPath: '/',
+    assetsPublicPath: assetsPublicPath,
     proxyTable: {
       '/api': {
         target: 'http://localhost:8080',

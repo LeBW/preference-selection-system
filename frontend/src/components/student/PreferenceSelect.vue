@@ -104,7 +104,9 @@
           <p v-else>当前提交第二志愿：{{student['second-choice-major']}}</p>
 
           <p v-if="adjustMajor === true">愿意调剂到其他学科方向</p>
+          <p v-else style="color: firebrick">不愿意调剂到其他学科方向</p>
           <p v-if="adjustDegreeType === true">愿意调剂为专业硕士</p>
+          <p v-else style="color: firebrick">不愿意调剂为专业硕士</p>
 
           <p>当前志愿提交时间：{{student['last-modify-time']}}</p>
         </div>
