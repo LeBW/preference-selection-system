@@ -81,10 +81,10 @@
               <el-checkbox v-model="student['adjust-major']">愿意调剂到其他学科方向</el-checkbox>
               <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>
             </div>
-<!--            <div v-else>-->
-<!--              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '专业学位'">愿意调剂到其他学科方向</el-checkbox>-->
+            <div v-else>
+              <el-checkbox v-model="student['adjust-major']" v-if="student['degree-type'] === '学术学位'">愿意调剂到其他学科方向</el-checkbox>
 <!--              <el-checkbox v-model="student['adjust-degree-type']" v-if="student['degree-type'] === '学术学位'">愿意调剂为专业学位硕士</el-checkbox>-->
-<!--            </div>-->
+            </div>
 
             <br/>
 
@@ -103,10 +103,13 @@
           <p v-if="student['second-choice-direction'] !== null && student['second-choice-direction'] !== ''">当前提交第二志愿：{{student['second-choice-major']}} - {{student['second-choice-direction']}}</p>
           <p v-else>当前提交第二志愿：{{student['second-choice-major']}}</p>
 
-          <p v-if="adjustMajor === true">愿意调剂到其他学科方向</p>
-          <p v-else style="color: firebrick">不愿意调剂到其他学科方向</p>
-          <p v-if="adjustDegreeType === true">愿意调剂为专业硕士</p>
-          <p v-else style="color: firebrick">不愿意调剂为专业硕士</p>
+          <!--   软院专硕不显示    -->
+          <div v-if="student['department'].indexOf('软件') === -1 || student['degree-type'] === '学术学位'">
+            <p v-if="adjustMajor === true">愿意调剂到其他学科方向</p>
+            <p v-else style="color: firebrick">不愿意调剂到其他学科方向</p>
+            <p v-if="adjustDegreeType === true">愿意调剂为专业硕士</p>
+            <p v-else style="color: firebrick">不愿意调剂为专业硕士</p>
+          </div>
 
           <p>当前志愿提交时间：{{student['last-modify-time']}}</p>
         </div>
@@ -335,6 +338,16 @@ export default {
     changeSecChoice (val) {
       // 改变第二志愿
       let secMajor = val.split('－')[0].trim()
+      // 软院学硕第二志愿为不调剂专硕时
+      if (this.student['department'].indexOf('软件') !== -1) {
+        if (this.student['degree-type'] === '学术学位') {
+          if (secMajor === '不调剂专硕') {
+            this.adjustDegreeType = false
+          } else {
+            this.adjustDegreeType = true
+          }
+        }
+      }
 
       if (this.student['degree-type'] === '专业学位') {
         if (this.firstChoice !== null && secMajor === this.firstChoice.split('－')[0].trim()) {

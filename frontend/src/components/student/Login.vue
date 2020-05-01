@@ -6,7 +6,7 @@
                  label-position="left"
                  label-width="0px"
                  v-loading="loading">
-            <h3 class="login_title">登录</h3>
+            <h3 class="login_title">报考软件学院研究生志愿填报</h3>
             <el-form-item prop="ticketNumber">
                 <el-input type="text"
                           v-model="loginForm.ticketNumber"
