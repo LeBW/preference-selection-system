@@ -342,9 +342,9 @@ export default {
       if (this.student['department'].indexOf('软件') !== -1) {
         if (this.student['degree-type'] === '学术学位') {
           if (secMajor === '不调剂专硕') {
-            this.adjustDegreeType = false
+            this.student['adjust-degree-type'] = false
           } else {
-            this.adjustDegreeType = true
+            this.student['adjust-degree-type'] = true
           }
         }
       }
