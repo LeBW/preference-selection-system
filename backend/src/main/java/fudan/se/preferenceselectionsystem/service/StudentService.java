@@ -88,7 +88,7 @@ public class StudentService {
             }
             ChoicesOverview choicesOverview = new ChoicesOverview();
             choicesOverview.setMajor(major);
-            choicesOverview.setSpots(majorRepository.findFirstByMajor(major).getSpots());
+            choicesOverview.setSpots(majorRepository.findFirstByMajorAndDegreeType(major, student.getDegreeType()).getSpots());
             choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByDegreeTypeEqualsAndFirstChoiceMajorEquals(student.getDegreeType(), major));
             choicesOverviews.add(choicesOverview);
         }
