@@ -7,7 +7,7 @@ import Login from '@/components/student/Login'
 Vue.use(Router)
 
 export const router = new Router({
-  base: 'preference/cs',
+  base: 'preference/se',
   routes: [
     {
       path: '/',
