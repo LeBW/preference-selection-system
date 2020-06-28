@@ -7,7 +7,7 @@ import Login from '@/components/student/Login'
 Vue.use(Router)
 
 export const router = new Router({
-  base: 'preference/se',
+  // base: 'preference/se',
   routes: [
     {
       path: '/',
@@ -20,7 +20,7 @@ export const router = new Router({
       name: 'Preference',
       component: PreferenceSelect,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
     {

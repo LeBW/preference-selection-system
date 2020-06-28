@@ -227,7 +227,7 @@ export default {
     },
     downloadFile (data, name) {
       // 文件数据打包
-      const blob = new Blob([data])
+      const blob = new Blob([data], {type: 'application/pdf'})
       // const blob = data
       if ('download' in document.createElement('a')) {
         // 非IE下载
