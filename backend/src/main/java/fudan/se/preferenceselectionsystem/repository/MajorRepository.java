@@ -16,6 +16,8 @@ public interface MajorRepository extends CrudRepository<Major, Long> {
 
     public Major findFirstByMajor(String major);
 
+    public List<Major> findByMajor(String major);
+
     @Query("SELECT DISTINCT major.major FROM Major major WHERE major.degreeType = ?1")
     public List<String> findDistinctMajorsByDegreeType(String degreeType);
 
