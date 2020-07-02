@@ -202,7 +202,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          this.$message.alert('刷新失败！')
+          this.$message.error('刷新失败！')
         })
     },
     getFilesInfo () {
