@@ -2,9 +2,9 @@ POST http://localhost:8080/student/login
 Content-Type: application/json
 
 {
-  "ticket-number": "123456",
+  "ticket-number": "102460210011376",
   "name": "李博文",
-  "id-number": "421122199702250017"
+  "id-number": "322085554"
 }
 
 ###
@@ -15,7 +15,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4M
 ###
 POST http://localhost:8080/student/choice
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4MDI4NzksImV4cCI6MTU4NzgyMDg3OX0.hVg-12wAvqKtVZGKO9y7G-fPOO0MB70_38LpUMxlPHX-Rxyu127MBDGbRk75d3y0GYdJvcMIG8mX4ZflmalmTw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDI0NjAyMTAwMTM4NDAiLCJpYXQiOjE1ODg2NTYwODMsImV4cCI6MTU4ODY3NDA4M30.3cKjMWTnnvkdl8u_ufrg4TRa-C412Y6Bb49Ma1teiZGKR9EJ4dogYmQ5EuLMdA8xGGj_UrvqPwnO-kiwuXCq9g
 
 {
   "first-choice-major": "计算机系统结构",
@@ -29,12 +29,12 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4M
 ###
 GET http://localhost:8080/student/major
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDI0NjAyMTAwMTM4NDAiLCJpYXQiOjE1ODg2NTYwODMsImV4cCI6MTU4ODY3NDA4M30.3cKjMWTnnvkdl8u_ufrg4TRa-C412Y6Bb49Ma1teiZGKR9EJ4dogYmQ5EuLMdA8xGGj_UrvqPwnO-kiwuXCq9g
 
 ###
 GET http://localhost:8080/student/choices-overview
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjM0NTYiLCJpYXQiOjE1ODc4Mjg0NTYsImV4cCI6MTU4Nzg0NjQ1Nn0.BeR8bd2M2e0B7fMe4HbX_AjL1HW9A7zZmtYcZNjAzaHmZem2gjuqqxktkA_XNd8WZHAJXl3XUxeiBqC9ioYMWw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDI0NjAyMTAwMTEzNzYiLCJpYXQiOjE1ODg2NTY0MzEsImV4cCI6MTU4ODY3NDQzMX0.7v0CH8cikGfpUOk1bl4fd_EDG1wcCknEfpZ7pDBB3ZeVL_b20mpJJh1RJOHyiNgotDgAf8ExfiaWzhzkNIhxKw
 
 ###
 GET http://localhost:8080/student/files

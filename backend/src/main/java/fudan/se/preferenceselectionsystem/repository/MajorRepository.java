@@ -14,7 +14,7 @@ import java.util.List;
 public interface MajorRepository extends CrudRepository<Major, Long> {
     public List<Major> findByDegreeType(String degreeType);
 
-    public Major findFirstByMajor(String major);
+    public Major findFirstByMajorAndDegreeType(String major, String degreeType);
 
     @Query("SELECT DISTINCT major.major FROM Major major WHERE major.degreeType = ?1")
     public List<String> findDistinctMajorsByDegreeType(String degreeType);
