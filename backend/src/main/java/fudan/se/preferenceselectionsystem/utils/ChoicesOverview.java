@@ -1,5 +1,6 @@
 package fudan.se.preferenceselectionsystem.utils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -7,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ChoicesOverview {
     private String major;
+
+    @JsonProperty("degree-type")
+    private String degreeType;
 
     private Integer spots;
 
@@ -22,6 +26,14 @@ public class ChoicesOverview {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getDegreeType() {
+        return degreeType;
+    }
+
+    public void setDegreeType(String degreeType) {
+        this.degreeType = degreeType;
     }
 
     public Integer getSpots() {

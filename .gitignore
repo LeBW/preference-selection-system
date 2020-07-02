@@ -23,7 +23,7 @@ target/
 node_modules/
 /nbproject/private/
 /nbbuild/
-/dist/
+
 /nbdist/
 /.nb-gradle/
 

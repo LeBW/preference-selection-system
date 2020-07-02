@@ -65,15 +65,15 @@ public class StudentService {
 
     public Iterable<Major> getMajorInfo(String ticketNumber) {
         Student student = studentRepository.findByTicketNumber(ticketNumber);
-        String degreeType = student.getDegreeType();
+        String degreeType = student.getDegreeType();  // 这里其实是一级学科
         if (student.getDepartment().contains("软件")) {
             if (degreeType.contains("学术"))
                 return majorRepository.findAll();
             else
                 return majorRepository.findByDegreeType(degreeType);
         }
-        // get majors by degree type.
-        return majorRepository.findByDegreeType(degreeType);
+        // get majors by 一级学科
+        return majorRepository.findByMajor(degreeType);
     }
 
     public List<ChoicesOverview> getChoicesOverview(String ticketNumber) {
@@ -81,15 +81,14 @@ public class StudentService {
         // get choices overview by degree type
         ArrayList<ChoicesOverview> choicesOverviews = new ArrayList<>();
 
-        List<String> majors = majorRepository.findDistinctMajorsByDegreeType(student.getDegreeType());
-        for (String major: majors) {
-            if (major.equals("无")) {
-                continue;
-            }
+        List<Major> majors = majorRepository.findByMajor(student.getDegreeType());
+        for (Major major: majors) {
             ChoicesOverview choicesOverview = new ChoicesOverview();
-            choicesOverview.setMajor(major);
-            choicesOverview.setSpots(majorRepository.findFirstByMajorAndDegreeType(major, student.getDegreeType()).getSpots());
-            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByDegreeTypeEqualsAndFirstChoiceMajorEquals(student.getDegreeType(), major));
+            choicesOverview.setMajor(major.getMajor());
+            choicesOverview.setDegreeType(major.getDegreeType());
+            choicesOverview.setSpots(major.getSpots());
+            // TODO
+            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByDegreeTypeEqualsAndFirstChoiceMajorEquals(student.getDegreeType(), major.getMajor()));
             choicesOverviews.add(choicesOverview);
         }
         return choicesOverviews;
