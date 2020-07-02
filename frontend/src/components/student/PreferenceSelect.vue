@@ -178,15 +178,26 @@ export default {
       this.$axios.get('/student/choices-overview')
         .then(resp => {
           this.choiceInfo = resp.data
+          let direction = new Map()
           for (let i = 0; i < this.choiceInfo.length; i++) {
-            if (this.choiceInfo[i]['major'] === '直博生') {
-              this.choiceInfo[i]['phd-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
-              this.choiceInfo[i]['phd-spots'] = this.choiceInfo[i]['spots']
-            } else if (this.choiceInfo[i]['major'].contains('学术')) {
-              this.choiceInfo[i]['research-spots'] = this.choiceInfo[i]['spots']
-            } else if (this.choiceInfo[i]['major'].contains('专业')) {
-              this.choiceInfo[i]['prof-spots'] = this.choiceInfo[i]['spots']
+            if (!direction.has(this.choiceInfo[i]['major'])) {
+              direction.set(this.choiceInfo[i]['major'], new Map())
             }
+            if (this.choiceInfo[i]['degree-type'] === '直博生') {
+              direction.get(this.choiceInfo[i]['major'])['phd-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              direction.get(this.choiceInfo[i]['major'])['phd-spots'] = this.choiceInfo[i]['spots']
+            } else if (this.choiceInfo[i]['degree-type'].includes('学术')) {
+              direction.get(this.choiceInfo[i]['major'])['research-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              direction.get(this.choiceInfo[i]['major'])['research-spots'] = this.choiceInfo[i]['spots']
+            } else if (this.choiceInfo[i]['degree-type'].includes('专业')) {
+              direction.get(this.choiceInfo[i]['major'])['prof-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              direction.get(this.choiceInfo[i]['major'])['prof-spots'] = this.choiceInfo[i]['spots']
+            }
+          }
+          this.choiceInfo = []
+          for (let item of direction) {
+            this.choiceInfo = item[1]
+            this.choiceInfo['major'] = item[0]
           }
         })
         .catch(error => {
@@ -282,10 +293,11 @@ export default {
     },
     changeFirstChoice (val) {
       let firstMajor = val.split('－')[0].trim()
+      console.log('first major ' + firstMajor)
       // 修改第二志愿列表，第二志愿强制重新选择
       this.majorTwo = []
       for (let i = 0; i < this.majorInfo.length; i++) {
-        if (this.majorInfo[i]['major'] !== firstMajor) {
+        if (this.majorInfo[i]['direction'] !== firstMajor) {
           this.majorTwo.push(this.majorInfo[i])
         }
       }
@@ -306,7 +318,7 @@ export default {
       this.majorOne = []
 
       for (let i = 0; i < this.majorInfo.length; i++) {
-        if (this.majorInfo[i]['major'] !== secMajor) {
+        if (this.majorInfo[i]['direction'] !== secMajor) {
           this.majorOne.push(this.majorInfo[i])
         }
       }

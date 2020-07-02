@@ -96,7 +96,7 @@ export default {
         border-radius: 15px;
         background-clip: padding-box;
         margin: 90px auto;
-        width: 30%;
+        width: 40%;
         height: 40%;
         padding: 35px 35px 35px 35px;
         background: #fff;
