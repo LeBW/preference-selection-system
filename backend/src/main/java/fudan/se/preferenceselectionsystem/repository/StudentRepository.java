@@ -12,4 +12,6 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
     Student findByTicketNumber(String ticketNumber);
 
     Integer countByDegreeTypeEqualsAndFirstChoiceMajorEquals(String degreeType, String firstChoiceMajor);
+
+    Integer countByFirstChoiceMajorEqualsAndFirstChoiceDirectionEquals(String firstChoiceMajor, String firstChoiceDirection);
 }

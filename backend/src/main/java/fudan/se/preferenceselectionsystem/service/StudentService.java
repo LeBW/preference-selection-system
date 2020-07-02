@@ -84,11 +84,11 @@ public class StudentService {
         List<Major> majors = majorRepository.findByMajor(student.getDegreeType());
         for (Major major: majors) {
             ChoicesOverview choicesOverview = new ChoicesOverview();
-            choicesOverview.setMajor(major.getMajor());
+            choicesOverview.setMajor(major.getDirection());   //夏令营中的方向就是专业
             choicesOverview.setDegreeType(major.getDegreeType());
             choicesOverview.setSpots(major.getSpots());
-            // TODO
-            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByDegreeTypeEqualsAndFirstChoiceMajorEquals(student.getDegreeType(), major.getMajor()));
+            //
+            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByFirstChoiceMajorEqualsAndFirstChoiceDirectionEquals(major.getDirection(), major.getDegreeType()));
             choicesOverviews.add(choicesOverview);
         }
         return choicesOverviews;
