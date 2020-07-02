@@ -20,7 +20,7 @@ export const router = new Router({
       name: 'Preference',
       component: PreferenceSelect,
       meta: {
-        requireAuth: false
+        requireAuth: true
       }
     },
     {

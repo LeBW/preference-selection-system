@@ -203,7 +203,7 @@ export default {
           this.choiceInfo = []
           let i = 0
           for (let item of direction) {
-            this.choiceInfo.push(item)
+            this.choiceInfo.push(item[1])
             this.choiceInfo[i]['major'] = item[0]
             i++
           }
