@@ -9,7 +9,7 @@
           <div class="base_info">
             <p>报名号：{{student['ticket-number']}}</p>
             <p>考生姓名：{{student['name']}}</p>
-            <p>报考一级学科：{{student['major']}}</p>
+            <p>报考一级学科：{{student['degree-type']}}</p>
           </div>
         </el-col>
 
@@ -178,6 +178,16 @@ export default {
       this.$axios.get('/student/choices-overview')
         .then(resp => {
           this.choiceInfo = resp.data
+          for (let i = 0; i < this.choiceInfo.length; i++) {
+            if (this.choiceInfo[i]['major'] === '直博生') {
+              this.choiceInfo[i]['phd-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              this.choiceInfo[i]['phd-spots'] = this.choiceInfo[i]['spots']
+            } else if (this.choiceInfo[i]['major'].contains('学术')) {
+              this.choiceInfo[i]['research-spots'] = this.choiceInfo[i]['spots']
+            } else if (this.choiceInfo[i]['major'].contains('专业')) {
+              this.choiceInfo[i]['prof-spots'] = this.choiceInfo[i]['spots']
+            }
+          }
         })
         .catch(error => {
           console.log(error)
@@ -234,8 +244,7 @@ export default {
       this.$axios.get('/student/major')
         .then(resp => {
           console.log(resp)
-          // todo: 存疑
-          // 后端确认返回给我的只会是对应学位的专业目录
+          // 后端确认返回给我的只会是对应一级学科的专业目录
           this.majorInfo = resp.data
 
           for (let i = 0; i < this.majorInfo.length; i++) {
@@ -248,20 +257,11 @@ export default {
         })
     },
     submitInfo () {
-      // 为学硕补上第一志愿信息
-      if (this.student['degree-type'] === '学术学位') {
-        this.modifiedForm['first-choice-major'] = this.student['first-choice-major']
-        this.modifiedForm['first-choice-direction'] = this.student['first-choice-direction']
-      }
+      this.modifiedForm['first-choice-major'] = this.student['first-choice-major'] // 学科方向
+      this.modifiedForm['first-choice-direction'] = this.student['first-choice-direction'] // 学位类型
 
       if (this.modifiedForm['first-choice-major'] === this.modifiedForm['second-choice-major']) {
-        if (this.student['dgree-type'] === '学术学位') {
-          this.$message.error('第一志愿和第二志愿的专业应不同！请重新选择！')
-          return
-        } else {
-          this.$message.error('第一志愿和第二志愿的志愿方向应不同！请重新选择！')
-          return
-        }
+        this.$message.error('第一志愿和第二志愿的学科方向应不同！请重新选择！')
       }
 
       // 提交志愿填报信息
