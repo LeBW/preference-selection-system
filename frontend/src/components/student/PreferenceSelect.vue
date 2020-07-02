@@ -5,35 +5,17 @@
       </el-row>
 
       <el-row :gutter="20">
-        <el-col :span="12">
-          <div class="base_info">
+        <div class="base_info">
+          <el-col :span="6">
             <p>报名号：{{student['ticket-number']}}</p>
+          </el-col>
+          <el-col :span="6">
             <p>考生姓名：{{student['name']}}</p>
+          </el-col>
+          <el-col :span="6">
             <p>报考一级学科：{{student['degree-type']}}</p>
-          </div>
-        </el-col>
-
-        <el-col :span="12">
-          <div>
-            <span style="padding: 5%; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px;margin-inline-end: 0px;font-weight: bold;">名额与填报志愿人数</span>
-            <el-button type="primary" style="background: #afb4db; border: none" size="mini" @click="getChoicesOverview">刷新</el-button>
-            <el-table :data="choiceInfo">
-              <el-table-column prop="major" label="学科方向"></el-table-column>
-              <el-table-column label="直博生">
-                <el-table-column prop="phd-spots" label="名额"></el-table-column>
-                <el-table-column prop="phd-first-choice-major-numbers" label="第一志愿人数"></el-table-column>
-              </el-table-column>
-              <el-table-column label="学术学位硕士生">
-                <el-table-column prop="research-spots" label="名额"></el-table-column>
-                <el-table-column prop="research-first-choice-major-numbers" label="第一志愿人数"></el-table-column>
-              </el-table-column>
-              <el-table-column label="专业学位硕士生">
-                <el-table-column prop="prof-spots" label="名额"></el-table-column>
-                <el-table-column prop="prof-first-choice-major-numbers" label="第一志愿人数"></el-table-column>
-              </el-table-column>
-            </el-table>
-          </div>
-        </el-col>
+          </el-col>
+        </div>
       </el-row>
 
       <el-row :gutter="20">
@@ -88,6 +70,28 @@
                        v-on:click="submitInfo">提交</el-button>
           </div>
         </el-col>
+      </el-row>
+
+      <el-row>
+        <div>
+          <span style="padding: 5%; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px;margin-inline-end: 0px;font-weight: bold;">名额与填报志愿人数</span>
+          <el-button type="primary" style="background: #afb4db; border: none" size="mini" @click="getChoicesOverview">刷新</el-button>
+          <el-table :data="choiceInfo">
+            <el-table-column prop="major" label="学科方向"></el-table-column>
+            <el-table-column label="直博生">
+              <el-table-column prop="phd-spots" label="名额"></el-table-column>
+              <el-table-column prop="phd-first-choice-major-numbers" label="第一志愿人数"></el-table-column>
+            </el-table-column>
+            <el-table-column label="学术学位硕士生">
+              <el-table-column prop="research-spots" label="名额"></el-table-column>
+              <el-table-column prop="research-first-choice-major-numbers" label="第一志愿人数"></el-table-column>
+            </el-table-column>
+            <el-table-column label="专业学位硕士生">
+              <el-table-column prop="prof-spots" label="名额"></el-table-column>
+              <el-table-column prop="prof-first-choice-major-numbers" label="第一志愿人数"></el-table-column>
+            </el-table-column>
+          </el-table>
+        </div>
       </el-row>
 
       <el-row>
@@ -183,22 +187,27 @@ export default {
             if (!direction.has(this.choiceInfo[i]['major'])) {
               direction.set(this.choiceInfo[i]['major'], new Map())
             }
+            let tmp = direction.get(this.choiceInfo[i]['major'])
             if (this.choiceInfo[i]['degree-type'] === '直博生') {
-              direction.get(this.choiceInfo[i]['major'])['phd-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
-              direction.get(this.choiceInfo[i]['major'])['phd-spots'] = this.choiceInfo[i]['spots']
+              tmp['phd-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              tmp['phd-spots'] = this.choiceInfo[i]['spots']
+              direction.set(this.choiceInfo[i]['major'], tmp)
             } else if (this.choiceInfo[i]['degree-type'].includes('学术')) {
-              direction.get(this.choiceInfo[i]['major'])['research-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
-              direction.get(this.choiceInfo[i]['major'])['research-spots'] = this.choiceInfo[i]['spots']
+              tmp['research-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              tmp['research-spots'] = this.choiceInfo[i]['spots']
             } else if (this.choiceInfo[i]['degree-type'].includes('专业')) {
-              direction.get(this.choiceInfo[i]['major'])['prof-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
-              direction.get(this.choiceInfo[i]['major'])['prof-spots'] = this.choiceInfo[i]['spots']
+              tmp['prof-first-choice-major-numbers'] = this.choiceInfo[i]['first-choice-major-numbers']
+              tmp['prof-spots'] = this.choiceInfo[i]['spots']
             }
           }
           this.choiceInfo = []
+          let i = 0
           for (let item of direction) {
-            this.choiceInfo = item[1]
-            this.choiceInfo['major'] = item[0]
+            this.choiceInfo.push(item)
+            this.choiceInfo[i]['major'] = item[0]
+            i++
           }
+          console.log(this.choiceInfo)
         })
         .catch(error => {
           console.log(error)
@@ -268,9 +277,6 @@ export default {
         })
     },
     submitInfo () {
-      this.modifiedForm['first-choice-major'] = this.student['first-choice-major'] // 学科方向
-      this.modifiedForm['first-choice-direction'] = this.student['first-choice-direction'] // 学位类型
-
       if (this.modifiedForm['first-choice-major'] === this.modifiedForm['second-choice-major']) {
         this.$message.error('第一志愿和第二志愿的学科方向应不同！请重新选择！')
       }

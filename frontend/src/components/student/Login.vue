@@ -6,7 +6,7 @@
                  label-position="left"
                  label-width="0px"
                  v-loading="loading">
-            <h3 class="login_title">2020年复旦大学计算机科学技术学院和软件学院全国优秀大学生夏令营志愿填报</h3>
+            <h3 class="login_title">2020年复旦大学计算机科学技术学院和软件学院<br>全国优秀大学生夏令营志愿填报</h3>
             <el-form-item prop="ticketNumber">
                 <el-input type="text"
                           v-model="loginForm.ticketNumber"
