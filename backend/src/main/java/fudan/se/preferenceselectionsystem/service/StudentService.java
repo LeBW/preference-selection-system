@@ -78,18 +78,31 @@ public class StudentService {
 
     public List<ChoicesOverview> getChoicesOverview(String ticketNumber) {
         Student student = studentRepository.findByTicketNumber(ticketNumber);
-        // get choices overview by degree type
         ArrayList<ChoicesOverview> choicesOverviews = new ArrayList<>();
-
-        List<Major> majors = majorRepository.findByMajor(student.getDegreeType());
-        for (Major major: majors) {
-            ChoicesOverview choicesOverview = new ChoicesOverview();
-            choicesOverview.setMajor(major.getDirection());   //夏令营中的方向就是专业
-            choicesOverview.setDegreeType(major.getDegreeType());
-            choicesOverview.setSpots(major.getSpots());
-            //
-            choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByFirstChoiceMajorEqualsAndFirstChoiceDirectionEquals(major.getDirection(), major.getDegreeType()));
-            choicesOverviews.add(choicesOverview);
+        // get choices overview by degree type
+        if (student.getDegreeType().contains("网络空间安全")) {  // 网络空间安全不区分方向（什么鸟需求...)
+            //干脆尼玛写死吧
+            List<Major> majors = majorRepository.findByDirectionContains("网络空间");
+            for (Major major: majors) {
+                ChoicesOverview choicesOverview = new ChoicesOverview();
+                choicesOverview.setMajor(student.getDegreeType());
+                choicesOverview.setDegreeType(major.getDegreeType());
+                choicesOverview.setSpots(major.getSpots());
+                choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByDegreeTypeEqualsAndFirstChoiceDirectionEquals(student.getDegreeType(), major.getDegreeType()));
+                choicesOverviews.add(choicesOverview);
+            }
+        }
+        else {
+            List<Major> majors = majorRepository.findByMajor(student.getDegreeType());
+            for (Major major: majors) {
+                ChoicesOverview choicesOverview = new ChoicesOverview();
+                choicesOverview.setMajor(major.getDirection());   //夏令营中的方向就是专业
+                choicesOverview.setDegreeType(major.getDegreeType());
+                choicesOverview.setSpots(major.getSpots());
+                //
+                choicesOverview.setFirstChoiceMajorNumbers(studentRepository.countByFirstChoiceMajorEqualsAndFirstChoiceDirectionEquals(major.getDirection(), major.getDegreeType()));
+                choicesOverviews.add(choicesOverview);
+            }
         }
         return choicesOverviews;
     }
