@@ -66,12 +66,6 @@ public class StudentService {
     public Iterable<Major> getMajorInfo(String ticketNumber) {
         Student student = studentRepository.findByTicketNumber(ticketNumber);
         String degreeType = student.getDegreeType();  // 这里其实是一级学科
-        if (student.getDepartment().contains("软件")) {
-            if (degreeType.contains("学术"))
-                return majorRepository.findAll();
-            else
-                return majorRepository.findByDegreeType(degreeType);
-        }
         // get majors by 一级学科
         return majorRepository.findByMajor(degreeType);
     }
